@@ -1,0 +1,151 @@
+/*DROP DATABASE db_auto_457687;*/
+CREATE DATABASE IF NOT EXISTS db_auto_457687 ; 
+CREATE TABLE IF NOT EXISTS  role(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    role VARCHAR(30),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS  TypeFormation(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    type VARCHAR(30),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS typeExamen(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    type VARCHAR(30),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS typeMoniteur(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    type VARCHAR(30),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS utilisateur(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50),
+    password VARCHAR(255),
+    roleId int,
+    status boolean
+);
+CREATE TABLE IF NOT EXISTS secretariat(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50),
+    nom VARCHAR(30),
+    prenom VARCHAR(30)
+);
+CREATE TABLE IF NOT EXISTS administrateur(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50),
+    nom VARCHAR(30),
+    prenom VARCHAR(30)
+);
+CREATE TABLE IF NOT EXISTS moniteur(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50),
+    nom VARCHAR(20),
+    prenom VARCHAR(20),
+    num_cap VARCHAR(50),
+    date_cap DATE,
+    typeMoniteurId INT
+);
+CREATE TABLE IF NOT EXISTS candidat(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50),
+    nom_fr VARCHAR(30),
+    nom_ar VARCHAR(30),
+    prenom_fr VARCHAR(30),
+    prenom_ar VARCHAR(30),
+    date_naiss DATE,
+    lieu_naiss VARCHAR(30),
+    ville VARCHAR(255),
+    adresse VARCHAR(255),
+    sixe VARCHAR(255),
+    phone VARCHAR(20),
+    cin VARCHAR(50),
+    dateInscris DATE,
+    dateDebut DATE,
+    dateFin DATE,
+    nbr_heure_theorique INT,
+    nbr_heure_pratique INT,
+    n_siteMini INT,
+    permisId int,
+    groupId int
+);
+CREATE TABLE IF NOT EXISTS groupFormation(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nom VARCHAR(50),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS seanceFormation(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nom VARCHAR(50),
+    descriprion VARCHAR(255),
+    date_formation DATE,
+    typeFormation INT,
+    duree INT,
+    moniteurId INT
+);
+CREATE TABLE IF NOT EXISTS assister(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    idGroup INT,
+    idSeance INT
+);
+CREATE TABLE IF NOT EXISTS vehicule(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    model VARCHAR(50),
+    marque VARCHAR(255),
+    matricule VARCHAR(50)
+);
+CREATE TABLE IF NOT EXISTS  permis(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    Categorie VARCHAR(30),
+    descriprion VARCHAR(255)
+);
+CREATE TABLE IF NOT EXISTS  payiement(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    total INT,
+    totalPayie INT
+);
+CREATE TABLE IF NOT EXISTS  histroryPayiement(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    total INT,
+    totalPayie INT,
+    datePayiement DATE
+);
+CREATE TABLE IF NOT EXISTS  absence(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    date_abs DATE,
+    nbr_heur INT
+);
+CREATE TABLE IF NOT EXISTS  qcm(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS  serie(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS  histroryQCM(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    resultat INT,
+    condidatId INT
+);
+CREATE TABLE IF NOT EXISTS  examen(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    typeExamen INT
+);
+CREATE TABLE IF NOT EXISTS  resultatExamen(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    resultatExamen_1 INT,
+    resultatExamen_2 INT,
+    dateExamen_1 DATE,
+    dateExamen_2 DATE,
+    candidatId INT,
+    examenId INT
+);
+/*
+ALTER TABLE `utilisateur` ADD CONSTRAINT `constraint_user_role` 
+FOREIGN KEY (`roleId`) REFERENCES `role`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE `candidat` ADD CONSTRAINT `constraint_candidat_permis` 
+FOREIGN KEY (`permisId`) REFERENCES `permis`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE `candidat` ADD CONSTRAINT `constraint_candidat_group` 
+FOREIGN KEY (`groupId`) REFERENCES `groupformation`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+*/
