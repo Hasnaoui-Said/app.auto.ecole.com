@@ -1,4 +1,5 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/navbar.php'; ?>
 
 <!-- BEGIN #content -->
 <div id="content" class="app-content">
@@ -69,6 +70,5 @@
 
 </div>
 <!-- END #content -->
-</div>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

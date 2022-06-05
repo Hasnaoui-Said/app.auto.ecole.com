@@ -1,5 +1,5 @@
 <?php
-  class Home extends Controller {
+  class Test extends Controller {
     // public function __construct(){
     //   // if(!isLoggedIn()){
     //   //   redirect('users/login');

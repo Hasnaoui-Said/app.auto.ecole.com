@@ -1,21 +1,20 @@
 <?php
-class Home extends Controller
+class Resultats extends Controller
 {
   public function __construct()
   {
     if (!isLoggedIn()) {
       redirect();
     }
-    $this->userModel = $this->model('User');
+    $this->candidatModel = $this->model('Candidat');
   }
   public function index()
   {
     // Get data users
-    // $users = $this->usersModel->getUsers();
 
     $data = [
-      'title' => 'home',
-      'menu'=> 'home',
+      'title' => 'Resultats',
+      'menu'=> 'resultats',
       'user' => [
         'id' => 'id',
         'name' => 'name',
@@ -23,6 +22,7 @@ class Home extends Controller
         'role' => 'role',
       ]
     ];
-    $this->view('home/index', $data);
+    $this->view('resultats/index', $data);
   }
+  
 }
