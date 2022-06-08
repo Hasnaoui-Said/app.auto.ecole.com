@@ -13,9 +13,9 @@
     <!-- BEGIN header-nav -->
     <div class="navbar-nav">
         <div class="navbar-item navbar-form">
-            <form action="" method="POST" name="search">
+            <form action="<?= URLROOT . '/'. $data['menu']?>/search" method="POST" name="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter keyword" />
+                    <input type="text" name="search" class="form-control" placeholder="Chercher" />
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                 </div>
             </form>
@@ -54,7 +54,7 @@
             <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                 <img src="<?php echo URLROOT; ?>/public/assets/img/user/user-13.jpg" alt="" />
                 <span>
-                    <span class="d-none d-md-inline">Adam Schwartz</span>
+                    <span class="d-none d-md-inline"><?= $data['user']['name']; ?></span>
                     <b class="caret"></b>
                 </span>
             </a>

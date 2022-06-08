@@ -11,7 +11,7 @@ class Candidats extends Controller
   public function index()
   {
     // Get data users
-
+    $candidats = $this->candidatModel->getCandidats();
     $data = [
       'title' => 'Candidats',
       'menu'=> 'candidats',
@@ -21,7 +21,26 @@ class Candidats extends Controller
         'name' => 'name',
         'email' => 'email',
         'role' => 'role',
-      ]
+      ],
+      'candidats' => $candidats,
+    ];
+    $this->view('candidat/index', $data);
+  }
+  public function search()
+  {
+    // Get data users
+    $candidats = $this->candidatModel->search($_POST['search']);
+    $data = [
+      'title' => 'Candidats',
+      'menu'=> 'candidats',
+      'sub-menu'=> 'candidats',
+      'user' => [
+        'id' => 'id',
+        'name' => 'name',
+        'email' => 'email',
+        'role' => 'role',
+      ],
+      'candidats' => $candidats,
     ];
     $this->view('candidat/index', $data);
   }
