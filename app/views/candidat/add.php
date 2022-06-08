@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-5">
-                    hello
+                    image and input from candidat arabe
                 </div>
             </div>
         </form>
