@@ -6,14 +6,15 @@
     <!-- BEGIN page-header -->
     <h1 class="page-header">
         <span class="me-3">Candidats</span>
-        <a href="<?= URLROOT?>/candidats/add" 
-        class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">Ajouter</a>
+        <a href="<?= URLROOT ?>/candidats/add" class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">Ajouter</a>
     </h1>
     <!-- END page-header -->
 
-    <div class="col-xl-12">
+    <div class="col-xl-12 panel panel-inverse">
         <!-- BEGIN panel -->
-        <div class="panel panel-inverse">
+        <?php if(count($data['candidats']) > 0) :?>
+        
+        <div class="">
             <div class="row m-2 mt-3">
                 <form class="col-4 d-flex justify-content-start align-items-center">
                     <span class="text-nowrap mx-2">Nombre de rangées:</span>
@@ -23,8 +24,7 @@
                         <option value="50">50</option>
                         <option value="Tous">Tous</option>
                     </select>
-                    <button
-                    class="btn btn-sm mx-2" type="submit" style="color: #00acac; border: #00acac 1.2px solid;">Appliquer</button>
+                    <button class="btn btn-sm mx-2" type="submit" style="color: #00acac; border: #00acac 1.2px solid;">Appliquer</button>
                 </form>
             </div>
             <!-- BEGIN panel-body -->
@@ -45,25 +45,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($data['candidats'] as $row) : ?>
-                        <tr>
-                            <th><?= $row['id'] ?></th>
-                            <td class="text-nowrap"><?= $row['username'] ?></td>
-                            <td class="text-nowrap"><?= $row['nom_fr'] ?></td>
-                            <td class="text-nowrap"><?= $row['prenom_fr'] ?></td>
-                            <td class="text-nowrap"><?= $row['email'] ?></td>
-                            <td class="text-nowrap"><?= $row['phone'] ?></td>
-                            <td class="text-nowrap"><?= $row['cin'] ?></td>
-                            <td class="text-nowrap"><?= $row['Categorie'] ?></td>
-                            <td class="text-nowrap"><?= $row['dateInscris'] ?></td>
-                            <td class="text-nowrap">action</td>
-                        </tr>
-                    <?php endforeach; ?>
+                        <?php foreach ($data['candidats'] as $row) : ?>
+                            <tr>
+                                <th><?= $row['id'] ?></th>
+                                <td class="text-nowrap"><?= $row['username'] ?></td>
+                                <td class="text-nowrap"><?= $row['nom_fr'] ?></td>
+                                <td class="text-nowrap"><?= $row['prenom_fr'] ?></td>
+                                <td class="text-nowrap"><?= $row['email'] ?></td>
+                                <td class="text-nowrap"><?= $row['phone'] ?></td>
+                                <td class="text-nowrap"><?= $row['cin'] ?></td>
+                                <td class="text-nowrap"><?= $row['Categorie'] ?></td>
+                                <td class="text-nowrap"><?= $row['dateInscris'] ?></td>
+                                <td class="text-nowrap">action</td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             <!-- END panel-body -->
         </div>
+        
+        <?php else:?>
+        <div class="text-center my-4">
+            <h3> Aucune Candidats trouvée</h3>
+            <p>
+                Aucune Candidats ne correspond à vos filtres actuels. 
+                Essayez de supprimer certains d'entre eux pour obtenir de meilleurs résultats.
+            </p>
+        </div>
+        <?php endif ;?>
         <!-- END panel -->
     </div>
 

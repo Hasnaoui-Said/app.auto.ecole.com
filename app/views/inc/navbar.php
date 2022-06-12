@@ -15,12 +15,12 @@
         <div class="navbar-item navbar-form">
             <form action="<?= URLROOT . '/'. $data['menu']?>/search" method="POST" name="search">
                 <div class="form-group">
-                    <input type="text" name="search" class="form-control" placeholder="Chercher" />
+                    <input type="text" name="search" class="form-control" value="<?= $data['search'] ?? '' ?>" placeholder="Chercher" />
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
-        <div class="navbar-item dropdown">
+        <!-- <div class="navbar-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
                 <i class="fa fa-bell"></i>
                 <span class="badge">5</span>
@@ -48,7 +48,7 @@
                     </div>
                 </a>
             </div>
-        </div>
+        </div> -->
 
         <div class="navbar-item navbar-user dropdown">
             <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
@@ -147,7 +147,7 @@
                             <div class="menu-text">Tous les Candidats</div>
                         </a>
                     </div>
-                    <div class="menu-item  <?= $data['sub-menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item  <?= $data['sub-menu'] == 'addCandidat' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/candidats/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
@@ -168,7 +168,7 @@
                             <div class="menu-text">Tous les Groups</div>
                         </a>
                     </div>
-                    <div class="menu-item  <?= $data['sub-menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item  <?= $data['sub-menu'] == 'addGroup' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/groups/add" class="menu-link">
                             <div class="menu-text">Créer</div>
                         </a>
@@ -189,7 +189,7 @@
                             <div class="menu-text">Tous les moniteurs</div>
                         </a>
                     </div>
-                    <div class="menu-item  <?= $data['sub-menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item  <?= $data['sub-menu'] == 'addMoniteur' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/moniteurs/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
@@ -209,7 +209,7 @@
                         <a href="<?= URLROOT?>/vehicules" class="menu-link">
                             <div class="menu-text">Toutes les véhicule</div>
                         </a>
-                    </div><div class="menu-item  <?= $data['sub-menu'] == 'add' ? 'active' : '' ?>">
+                    </div><div class="menu-item  <?= $data['sub-menu'] == 'addVoiture' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/vehicules/add" class="menu-link">
                             <div class="menu-text">Nouveau</div>
                         </a>
@@ -244,7 +244,7 @@
                             <div class="menu-text">Tous les payiements</div>
                         </a>
                     </div>
-                    <div class="menu-item <?= $data['sub-menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item <?= $data['sub-menu'] == 'addPayiement' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/payiements/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
@@ -291,7 +291,7 @@
                             <div class="menu-text">Toutes les Series</div>
                         </a>
                     </div>
-                    <div class="menu-item <?= $data['menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item <?= $data['menu'] == 'addSerie' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/series/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
@@ -312,7 +312,7 @@
                             <div class="menu-text">Toutes les Questions</div>
                         </a>
                     </div>
-                    <div class="menu-item <?= $data['menu'] == 'add' ? 'active' : '' ?>">
+                    <div class="menu-item <?= $data['menu'] == 'addQuestion' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/questions/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>

@@ -6,12 +6,13 @@ class Groups extends Controller
     if (!isLoggedIn()) {
       redirect();
     }
-    $this->candidatModel = $this->model('Candidat');
+    $this->groupModel = $this->model('Group');
   }
   public function index()
   {
-    // Get data users
-
+    // Get data groups
+    $groups = $this->groupModel->getGroups();
+    $candidats = $this->groupModel->getCandidats();
     $data = [
       'title' => 'Groups',
       'menu'=> 'groups',
@@ -21,7 +22,9 @@ class Groups extends Controller
         'name' => 'name',
         'email' => 'email',
         'role' => 'role',
-      ]
+      ],
+      'groups'=> $groups,
+      'candidatsGrp'=> $candidats,
     ];
     $this->view('groups/index', $data);
   }

@@ -6,11 +6,12 @@ class Vehicules extends Controller
     if (!isLoggedIn()) {
       redirect();
     }
-    $this->candidatModel = $this->model('Candidat');
+    $this->voitureModel = $this->model('Vehicule');
   }
   public function index()
   {
-    // Get data users
+    // Get data voitures
+    $voitures = $this->voitureModel->getVehicules();
 
     $data = [
       'title' => 'Véhicules',
@@ -21,7 +22,28 @@ class Vehicules extends Controller
         'name' => 'name',
         'email' => 'email',
         'role' => 'role',
-      ]
+      ],
+      'voitures'=> $voitures,
+    ];
+    $this->view('voitures/index', $data);
+  }
+  public function search()
+  {
+    // Get data voitures
+    $voitures = $this->voitureModel->search($_POST['search']);
+
+    $data = [
+      'title' => 'Véhicules',
+      'menu'=> 'vehicules',
+      'sub-menu'=> 'vehicules',
+      'user' => [
+        'id' => 'id',
+        'name' => 'name',
+        'email' => 'email',
+        'role' => 'role',
+      ],
+      'voitures'=> $voitures,
+      'search' => $_POST['search']
     ];
     $this->view('voitures/index', $data);
   }
@@ -44,7 +66,6 @@ class Vehicules extends Controller
   }
   public function notifications()
   {
-    // Get data users
 
     $data = [
       'title' => 'notifications',

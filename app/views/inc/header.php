@@ -11,7 +11,8 @@
 	<link href="<?php echo URLROOT; ?>/public/assets/css/vendor.min.css" rel="stylesheet" />
 	<link href="<?php echo URLROOT; ?>/public/assets/css/default/app.min.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
-	
+	<!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo URLROOT; ?>/public/assets/img//logo/steering.png">
 	<!-- ================== BEGIN page-css ================== -->
 	<link href="<?php echo URLROOT; ?>/public/assets/plugins/jvectormap-next/jquery-jvectormap.css" rel="stylesheet" />
 	<link href="<?php echo URLROOT; ?>/public/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />

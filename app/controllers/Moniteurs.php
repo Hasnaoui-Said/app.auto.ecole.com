@@ -6,11 +6,12 @@ class Moniteurs extends Controller
     if (!isLoggedIn()) {
       redirect();
     }
-    $this->candidatModel = $this->model('Candidat');
+    $this->moniteurModel = $this->model('Moniteur');
   }
   public function index()
   {
-    // Get data users
+    // Get data moniteur
+    $moniteurs = $this->moniteurModel->getMoniteurs();
 
     $data = [
       'title' => 'Moniteurs',
@@ -21,13 +22,34 @@ class Moniteurs extends Controller
         'name' => 'name',
         'email' => 'email',
         'role' => 'role',
-      ]
+      ],
+      'moniteurs'=> $moniteurs,
+    ];
+    $this->view('moniteurs/index', $data);
+  }
+  public function search()
+  {
+    // Get data moniteur
+    $moniteurs = $this->moniteurModel->search($_POST['search']);
+
+    $data = [
+      'title' => 'Moniteurs',
+      'menu'=> 'moniteurs',
+      'sub-menu'=> 'moniteurs',
+      'user' => [
+        'id' => 'id',
+        'name' => 'name',
+        'email' => 'email',
+        'role' => 'role',
+      ],
+      'moniteurs'=> $moniteurs,
+      'search' => $_POST['search']
     ];
     $this->view('moniteurs/index', $data);
   }
   public function add()
   {
-    // Get data users
+    // Get data Moniteurs
 
     $data = [
       'title' => 'Moniteurs',
