@@ -2,7 +2,7 @@
 <div id="header" class="app-header">
     <!-- BEGIN navbar-header -->
     <div class="navbar-header">
-        <a href="index.html" class="navbar-brand"><img class="me-2" src="<?php echo URLROOT; ?>/public/assets/img/logo/steering.png" alt=""></span> <b> Driving</b> School</a>
+        <a href="" class="navbar-brand"><img class="me-2" src="<?php echo URLROOT; ?>/public/assets/img/logo/steering.png" alt=""></span> <b> Driving</b> School</a>
         <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="menu-divider m-0"></div>
             </div>
-            <div class="menu-header">Navigation</div>
+            <div class="menu-header" id="fullScreen">Navigation</div>
             <div class="menu-item <?= $data['menu'] == 'home' ? 'active' : '' ?>">
                 <a href="<?= URLROOT?>/home" class="menu-link">
                     <div class="menu-icon">
@@ -209,7 +209,7 @@
                         <a href="<?= URLROOT?>/vehicules" class="menu-link">
                             <div class="menu-text">Toutes les véhicule</div>
                         </a>
-                    </div><div class="menu-item  <?= $data['sub-menu'] == 'addVoiture' ? 'active' : '' ?>">
+                    </div><div class="menu-item  <?= $data['sub-menu'] == 'addVehicules' ? 'active' : '' ?>">
                         <a href="<?= URLROOT?>/vehicules/add" class="menu-link">
                             <div class="menu-text">Nouveau</div>
                         </a>

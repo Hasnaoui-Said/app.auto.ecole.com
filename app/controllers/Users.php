@@ -39,12 +39,12 @@ class Users extends Controller
 
       // Validate Email
       if (empty($data['email'])) {
-        $data['email_err'] = 'Pleae enter email';
+        $data['email_err'] = 'ADresse e-mail obligatoire';
       }
 
       // Validate Password
       if (empty($data['password'])) {
-        $data['password_err'] = 'Please enter password';
+        $data['password_err'] = 'Champ obligatoire';
       }
 
       // Check for user/email
@@ -52,7 +52,7 @@ class Users extends Controller
         // User found
       } else {
         // User not found
-        $data['email_err'] = 'No user found';
+        $data['email_err'] = 'Nom d\'utilisateur incorrect';
       }
 
       // Make sure errors are empty
@@ -65,7 +65,7 @@ class Users extends Controller
           // Create Session
           $this->createUserSession($loggedInUser);
         } else {
-          $data['password_err'] = 'Password incorrect';
+          $data['password_err'] = 'Mot de passe incorrect';
           $this->view('users/login', $data);
         }
       } else {
@@ -75,7 +75,7 @@ class Users extends Controller
     } else {
       // Init data
       $data = [
-        'title' => 'Auto ecole | login',
+        'title' => 'Auto ecole | Connexion',
         'email' => '',
         'password' => '',
         'email_err' => '',

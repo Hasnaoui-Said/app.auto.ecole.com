@@ -4,6 +4,7 @@
 <!-- BEGIN #content -->
 <div id="content" class="app-content">
     <!-- BEGIN page-header -->
+    <?php flash('voiture_message', 'Véhicule ajouté avec succès'); ?>
     <h1 class="page-header">
         <span class="me-3">Voitures</span>
         <a href="<?= URLROOT?>/vehicules/add" 
@@ -36,20 +37,20 @@
                             <th class="text-nowrap">Model</th>
                             <th class="text-nowrap">Marque</th>
                             <th class="text-nowrap">Matricule</th>
+                            <th class="text-nowrap" colspan="2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php 
                     $i = 0;
-                    foreach ($data['voitures'] as $row) : 
-                    $i ++;
-                    ?>
+                    foreach ($data['voitures'] as $row) : $i ++; ?>
                         <tr>
                             <th><?= $i ?></th>
                             <td class="text-nowrap"><?= $row['model'] ?></td>
                             <td class="text-nowrap"><?= $row['marque'] ?></td>
                             <td class="text-nowrap"><?= $row['matricule'] ?></td>
-                            <td class="text-nowrap">action</td>
+                            <td class="text-nowrap"><a href="<?= URLROOT; ?>/vehicules/edit/<?= $row['id']; ?>">edit</a></td>
+                            <td class="text-nowrap"><a href="<?= URLROOT; ?>/vehicules/delete/<?= $row['id']; ?>">delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

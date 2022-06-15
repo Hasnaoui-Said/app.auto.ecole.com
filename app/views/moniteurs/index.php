@@ -6,7 +6,7 @@
     <!-- BEGIN page-header -->
     <h1 class="page-header">
         <span class="me-3">Moniteurs</span>
-        <a href="<?= URLROOT?>/candidats/add" 
+        <a href="<?= URLROOT?>/moniteurs/add" 
         class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">Ajouter</a>
     </h1>
     <!-- END page-header -->
@@ -40,6 +40,7 @@
                             <th class="text-nowrap">CPA</th>
                             <th class="text-nowrap">Date CPA</th>
                             <th class="text-nowrap">Type</th>
+                            <th class="text-nowrap" colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +58,8 @@
                             <td class="text-nowrap"><?= $row['num_cpa'] ?></td>
                             <td class="text-nowrap"><?= $row['date_cpa'] ?></td>
                             <td class="text-nowrap"><?= $row['type'] ?></td>
-                            <td class="text-nowrap">action</td>
+                            <td class="text-nowrap"><a href="<?= URLROOT; ?>/moniteurs/edit/<?= $row['id']; ?>">edit</a></td>
+                            <td class="text-nowrap"><a href="<?= URLROOT; ?>/moniteurs/delete/<?= $row['id']; ?>">delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
