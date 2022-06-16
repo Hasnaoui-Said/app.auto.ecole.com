@@ -15,7 +15,7 @@ class Candidats extends Controller
   public function index()
   {
     // Get data candidats
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $limit = $_POST['row-nbr'];
       $candidats = $this->candidatModel->getCandidats($limit);
     } else {
@@ -155,7 +155,7 @@ class Candidats extends Controller
         'dateContrat' => $dateContrat,
         'dateExamen1' => $dateExamen1,
         'dateExamen2' => $dateExamen2,
-        'img' => $img,
+        'img' => '',
         'prenomAr' => $prenomAr,
         'nomAr' => $nomAr,
         'lieuNaissAr' => $lieuNaissAr,
@@ -163,8 +163,8 @@ class Candidats extends Controller
       );
       // Validate data
       setlocale(LC_TIME, ['MAR', 'mar', 'AR_ar']);
-      // validate regex
       $body['reste'] = $prix;
+      // validate regex
       $regix_phone = "/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/";
       if (!preg_match("/^[\w\-]{6,16}$/", $username)) $body_err['username_err'] = 'le nom d\'utilsateur doit avoir au moins 6 caractére';
       if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $email)) $body_err['email_err'] = 'Adresse email invalide';
@@ -190,6 +190,23 @@ class Candidats extends Controller
       if ($x > 0) $body_err['dateDebutTher_err'] = ' Date invalide';
       $x = strtotime(Date("d-m-Y")) - (strtotime($dateDebutPra) + 24 * 3600);
       if ($x > 0) $body_err['dateDebutPra_err'] = ' Date invalide';
+      // validate image
+
+      if (!empty($_FILES["img"]["name"])) {
+        // Get file info 
+        $fileName = basename($_FILES["img"]["name"]);
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        // Allow certain file formats 
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+        if (in_array($fileType, $allowTypes)) {
+          $image = $_FILES['img']['tmp_name'];
+          $body['img'] = addslashes(file_get_contents($image));
+        } else {
+          $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
+        }
+      } else {
+        $body_err['img_err'] = 'Please select an image file to upload.';
+      }
       // Validate if not empty
       $isEmty = array('username', 'email', 'nom', 'prenom', 'cin', 'phone', 'lieuNais', 'prix', 'reste', 'nbrHeurThe', 'nbrHeurPra');
       if (empty($username)) $body_err['username_err'] = 'Champs obligatoire!';
@@ -399,7 +416,7 @@ class Candidats extends Controller
         'dateContrat' => $dateContrat,
         'dateExamen1' => $dateExamen1,
         'dateExamen2' => $dateExamen2,
-        'img' => $img,
+        'img' => '',
         'prenomAr' => $prenomAr,
         'nomAr' => $nomAr,
         'lieuNaissAr' => $lieuNaissAr,
@@ -426,6 +443,22 @@ class Candidats extends Controller
       if ($nbrHeurThe > 80 || $nbrHeurThe < 15) $body_err['nbrHeurThe_err'] = 'Numéro invalide';
       if ($nbrHeurPra > 80 || $nbrHeurPra < 15) $body_err['nbrHeurPra_err'] = 'Numéro invalide';
       $x = strtotime(Date("d-m-Y")) - (strtotime($dateNaiss) + 14 * 365 * 24 *  3600);
+      // validate image
+      if (!empty($_FILES["img"]["name"])) {
+        // Get file info 
+        $fileName = basename($_FILES["img"]["name"]);
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        // Allow certain file formats 
+        $allowTypes = array('jpg', 'png', 'jpeg', 'jpe');
+        if (in_array($fileType, $allowTypes)) {
+          $image = $_FILES['img']['tmp_name'];
+          $body['img'] = addslashes(file_get_contents($image));
+        } else {
+          $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & jpe files are allowed to upload.';
+        }
+      } else {
+        $body_err['img_err'] = 'Please select an image file to upload.';
+      }
       // Validate if not empty
       if (empty($username)) $body_err['username_err'] = 'Champs obligatoire!';
       if (empty($email)) $body_err['email_err'] = 'Champs obligatoire!';

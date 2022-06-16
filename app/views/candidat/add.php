@@ -13,7 +13,7 @@
     <div class="panel-body panel p-4">
         <form class="form-horizontal text-capitalize" 
         action="<?= URLROOT ?>/candidats/<?= ($data['action'] == 'add') ? 'add' : 'edit/'. $data['body']['candidatId'] ?> " 
-        method="POST">
+        method="POST"  enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xs-12 col-md-8">
                     <div class="row ">
@@ -67,10 +67,9 @@
                             <label class="col-lg-4 col-form-label form-label" for="sexe">sexe <sup>*</sup>:</label>
                             <div class="col-lg-8">
                                 <select class="form-select form-control <?= (!empty($data['body_err']['sexe_err'])) ? 'is-invalid' : ''; ?>" name="sexe">
-                                    <option value=""></option>
                                     <optgroup label="Sexe">
-                                        <option value="1" <?= (!empty($data['body']['sexe'])) ? 'selected' : ''; ?>> Homme </option>
-                                        <option value="0" <?= (!empty($data['body']['sexe'])) ? 'selected' : ''; ?>> Femme </option>
+                                        <option value="1" <?= (!empty($data['body']['sexe']) && $data['body']['sexe'] == 1) ? 'selected' : ''; ?>> Homme </option>
+                                        <option value="0" <?= (!empty($data['body']['sexe']) && $data['body']['sexe'] == 0) ? 'selected' : ''; ?>> Femme </option>
                                     </optgroup>
                                 </select>
                                 <span class="invalid-feedback"><?= $data['body_err']['sexe_err']; ?></span>
@@ -167,7 +166,6 @@
                             <label class="form-label col-form-label col-lg-6" for="categorie">catégorie de permis <sup>*</sup>:</label>
                             <div class="col-lg-6">
                                 <select class="form-select form-control <?= (!empty($data['body_err']['categorie_err'])) ? 'is-invalid' : ''; ?>" name="categorie">
-                                    <option></option>
                                     <?php foreach ($data['permis'] as $cat) : ?>
                                         <option value="<?= $cat['id'] ?>" <?= (!empty($data['body']['categorie']) && $cat['id'] == $data['body']['categorie']) ? 'selected' : ''; ?>>
                                             <?= $cat['id'] . ' - ' . $cat['Categorie'] ?>
@@ -240,11 +238,15 @@
                 <div class="col-xs-12 col-md-4">
                     <div class="col-xs-12 form-group row mb-3">
                         <div class="col-4">
-                            <img class="form-label-sm form-label w-100" src="" alt="" width="100" height="100">
+                            <img class="form-label-sm form-label w-100 img_preview"
+                            src="data:image/*;charset=utf8;base64,<?php echo base64_encode($data['body']['img']); ?>"
+                            alt="" width="100" height="100">
                         </div>
                         <div class="col-8 text-center">
                             <label for="img" class="form-label-sm form-label">Selectionne une image</label>
-                            <input class="form-control form-control-sm" multiple accept="image/png, image/jpe, image/jpg, image/jpeg" id="img" name="img" type="file">
+                            <input class="form-control form-control-sm img_input <?= (!empty($data['body_err']['img_err'])) ? 'is-invalid' : ''; ?>"
+                             multiple accept="image/png, image/jpe, image/jpg, image/jpeg"  id="img" name="img" type="file">
+                            <span class="invalid-feedback"><?= $data['body_err']['img_err']; ?></span>
                         </div>
                     </div>
                     <div class="row">

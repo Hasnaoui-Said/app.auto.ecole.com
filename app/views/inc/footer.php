@@ -46,7 +46,21 @@
 			console.log("clicked");
 			openFullscreen();
 		});
+
 	</script>
+
+<script>
+    document.querySelector('.img_input').addEventListener('change', function(e) {
+        console.log('file changed');
+        var file = e.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            document.querySelector('.img_preview').setAttribute('src', e.target.result);
+        }; 
+        reader.readAsDataURL(e.target.files[0]);
+    }); // change
+</script>
 
 	</body>
 
