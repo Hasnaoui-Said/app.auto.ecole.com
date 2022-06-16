@@ -69,7 +69,8 @@ class Candidat
       'SELECT *,
                       typeFormation.descriprion as `formationDesc`,
                       candidat.id as `candidatId`,
-                      permis.descriprion as `permisDesc`
+                      permis.descriprion as `permisDesc`,
+                      utilisateur.image as `UserImg`
                       FROM `candidat`
                       INNER JOIN utilisateur
                       ON candidat.userId = utilisateur.id
@@ -89,14 +90,15 @@ class Candidat
   // add candidat
   public function addCandidat($data)
   {
+    $img = $data['image'];
     $this->db->query("INSERT INTO candidat(userId, nom_fr, nom_ar, prenom_fr, prenom_ar, 
                       date_naiss, lieu_naiss, lieu_naiss_Ar, ville, adresse, adresse_ar, phone, cin, 
                       dateDebutThe, dateDebutPra, nbr_heure_theorique, nbr_heure_pratique, 
-                      n_siteMini, numContrat, permisId, sexe, typeFormation) 
+                      n_siteMini, numContrat, permisId, sexe, typeFormation, img) 
                       VALUES (:userId, :nom_fr, :nom_ar, :prenom_fr, :prenom_ar, 
                       :date_naiss, :lieu_naiss, :lieu_naiss_Ar, :ville, :adresse, :adresse_ar, :phone, :cin, 
                       :dateDebutThe, :dateDebutPra, :nbr_heure_theorique, :nbr_heure_pratique, 
-                      :n_siteMini, :numContrat, :permisId, :sexe, :typeFormation)
+                      :n_siteMini, :numContrat, :permisId, :sexe, :typeFormation, '$img')
               ");
     // Bind values
     $this->db->bind(':userId', $data['idUser']);
@@ -132,11 +134,12 @@ class Candidat
 
   public function updateCandidat($data)
   {
+    $img = $data['img'];
     $this->db->query("UPDATE `candidat` SET nom_fr = :nom_fr, nom_ar = :nom_ar, prenom_fr = :prenom_fr, prenom_ar = :prenom_ar, 
                       date_naiss = :date_naiss, lieu_naiss = :lieu_naiss, lieu_naiss_Ar = :lieu_naiss_Ar, ville = :ville, adresse = :adresse,
                       adresse_ar = :adresse_ar, phone = :phone, cin = :cin,
                       nbr_heure_theorique = :nbr_heure_theorique, nbr_heure_pratique = :nbr_heure_pratique, n_siteMini = :n_siteMini,
-                      numContrat = :numContrat, permisId = :permisId, sexe = :sexe, typeFormation = :typeFormation  
+                      numContrat = :numContrat, permisId = :permisId, sexe = :sexe, typeFormation = :typeFormation, img = '$img'
                       WHERE candidat.id = :candidatId
               ");
     // Bind values
