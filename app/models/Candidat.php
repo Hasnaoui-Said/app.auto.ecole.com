@@ -24,12 +24,35 @@ class Candidat
                         ORDER BY utilisateur.dateCreate DESC LIMIT :limit
                       ");
     $this->db->bind(':limit', $limit, PDO::PARAM_INT);
-    return $this->db->resultSet();
+    $row = $this->db->resultSet();
+    return $row;
+  }
+  public function getAllCandidats($limit = 10)
+  {
+    $this->db->query("SELECT *,
+                        typeFormation.descriprion as `formationDesc`,
+                        candidat.id as `candidatId`,
+                        permis.descriprion as `permisDesc`
+                        FROM `candidat`
+                        INNER JOIN utilisateur
+                        ON candidat.userId = utilisateur.id
+                        INNER JOIN typeFormation
+                        ON candidat.typeFormation = typeFormation.id
+                        INNER JOIN permis
+                        ON permis.id = candidat.permisId
+                        WHERE 1
+                        ORDER BY utilisateur.status DESC, utilisateur.dateCreate DESC LIMIT :limit
+                      ");
+    $this->db->bind(':limit', $limit, PDO::PARAM_INT);
+    $row = $this->db->resultSet();
+    return $row;
   }
   public function search($search)
   {
+    $search = '%' . $search . '%';
     $this->db->query("SELECT *,
                       typeFormation.descriprion as `formationDesc`,
+                      candidat.id as `candidatId`,
                       permis.descriprion as `permisDesc`
                       FROM `candidat`
                       INNER JOIN utilisateur
@@ -38,19 +61,19 @@ class Candidat
                       ON candidat.typeFormation = typeFormation.id
                       INNER JOIN permis
                       ON permis.id = candidat.permisId
-                      WHERE utilisateur.status = 1 AND 
-                      ( candidat.nom_fr LIKE '%:search%' OR
-                        candidat.prenom_fr LIKE '%:search%' OR
-                        utilisateur.username LIKE '%:search%'OR
-                        candidat.cin LIKE '%:search%'OR
-                        candidat.phone LIKE '%:search%'OR
-                        permis.Categorie LIKE '%:search%'OR
-                        utilisateur.email LIKE '%:search%'
+                      WHERE 1 AND 
+                      ( candidat.nom_fr LIKE '$search' OR
+                        candidat.prenom_fr LIKE '$search' OR
+                        utilisateur.username LIKE '$search'OR
+                        candidat.cin LIKE '$search'OR
+                        candidat.phone LIKE '$search'OR
+                        permis.Categorie LIKE '$search'OR
+                        utilisateur.email LIKE '$search'
                        )
                       ");
-    $this->db->bind(':search', $search, PDO::PARAM_STR);
-
-    return $this->db->resultSet();
+    // $this->db->bind(':search', $search, PDO::PARAM_STR);
+    $row = $this->db->resultSet();
+    return $row;
   }
   public function getCandidatByUsername($user)
   {
@@ -90,15 +113,14 @@ class Candidat
   // add candidat
   public function addCandidat($data)
   {
-    $img = $data['image'];
     $this->db->query("INSERT INTO candidat(userId, nom_fr, nom_ar, prenom_fr, prenom_ar, 
                       date_naiss, lieu_naiss, lieu_naiss_Ar, ville, adresse, adresse_ar, phone, cin, 
                       dateDebutThe, dateDebutPra, nbr_heure_theorique, nbr_heure_pratique, 
-                      n_siteMini, numContrat, permisId, sexe, typeFormation, img) 
+                      n_siteMini, numContrat, permisId, sexe, typeFormation) 
                       VALUES (:userId, :nom_fr, :nom_ar, :prenom_fr, :prenom_ar, 
                       :date_naiss, :lieu_naiss, :lieu_naiss_Ar, :ville, :adresse, :adresse_ar, :phone, :cin, 
                       :dateDebutThe, :dateDebutPra, :nbr_heure_theorique, :nbr_heure_pratique, 
-                      :n_siteMini, :numContrat, :permisId, :sexe, :typeFormation, '$img')
+                      :n_siteMini, :numContrat, :permisId, :sexe, :typeFormation)
               ");
     // Bind values
     $this->db->bind(':userId', $data['idUser']);
@@ -134,12 +156,11 @@ class Candidat
 
   public function updateCandidat($data)
   {
-    $img = $data['img'];
     $this->db->query("UPDATE `candidat` SET nom_fr = :nom_fr, nom_ar = :nom_ar, prenom_fr = :prenom_fr, prenom_ar = :prenom_ar, 
                       date_naiss = :date_naiss, lieu_naiss = :lieu_naiss, lieu_naiss_Ar = :lieu_naiss_Ar, ville = :ville, adresse = :adresse,
                       adresse_ar = :adresse_ar, phone = :phone, cin = :cin,
                       nbr_heure_theorique = :nbr_heure_theorique, nbr_heure_pratique = :nbr_heure_pratique, n_siteMini = :n_siteMini,
-                      numContrat = :numContrat, permisId = :permisId, sexe = :sexe, typeFormation = :typeFormation, img = '$img'
+                      numContrat = :numContrat, permisId = :permisId, sexe = :sexe, typeFormation = :typeFormation
                       WHERE candidat.id = :candidatId
               ");
     // Bind values
@@ -170,5 +191,15 @@ class Candidat
     } else {
       return false;
     }
+  }
+  // get candidat data by id User
+  public function getCandidatByIdUser($id)
+  {
+    $this->db->query("SELECT *, candidat.id as `id`, candidat.nom_fr as `nom`, candidat.prenom_fr as `prenom`  
+                      FROM `candidat` INNER JOIN utilisateur ON utilisateur.id = candidat.userId 
+                      WHERE utilisateur.id = :id");
+    $this->db->bind(':id', $id);
+    $row = $this->db->single();
+    return $row ? $row : [];
   }
 }

@@ -11,8 +11,9 @@ class User
   // Create a new Utilisateur
   public function addUser($data)
   {
-    $this->db->query('INSERT INTO `utilisateur`(`username`, `email`, `password`, `roleId`)
-                        VALUES(:username, :email, :password, :roleId)');
+    $img = $data['img'];
+    $this->db->query("INSERT INTO `utilisateur`(`username`, `email`, `password`, `roleId`, image)
+                        VALUES(:username, :email, :password, :roleId, '$img')");
     // Bind values
     $this->db->bind(':username', $data['username']);
     $this->db->bind(':email', $data['email']);
@@ -30,7 +31,7 @@ class User
   // Login User
   public function login($email, $password)
   {
-    $this->db->query('SELECT * FROM utilisateur INNER JOIN role ON utilisateur.roleId = role.id WHERE email = :email');
+    $this->db->query('SELECT *, utilisateur.id as `id` FROM utilisateur INNER JOIN role ON utilisateur.roleId = role.id WHERE email = :email');
     $this->db->bind(':email', $email);
     $row = $this->db->single();
 
@@ -140,7 +141,9 @@ class User
   public function updateUser($data)
   {
     $img = $data['img'];
-    $this->db->query("UPDATE utilisateur SET username = :username, email = :email , image = '$img' WHERE id = :id ");
+    if ($img == "") $query = "UPDATE utilisateur SET username = :username, email = :email WHERE id = :id ";
+    else $query = "UPDATE utilisateur SET username = :username, email = :email , image = '$img' WHERE id = :id ";
+    $this->db->query($query);
     // Bind values
     $this->db->bind(':id', $data['userId']);
     $this->db->bind(':username', $data['username']);
@@ -168,15 +171,31 @@ class User
       return false;
     }
   }
+  // activate user
+  public function activateUser($id)
+  {
+    $this->db->query('UPDATE utilisateur SET status = :status WHERE id = :id');
+    // Bind value
+    $this->db->bind(':status', 1);
+    $this->db->bind(':id', $id);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   // get user connected
   public function getUserConnected()
   {
-    $this->db->query('SELECT * FROM utilisateur WHERE id = :id');
+    $this->db->query('SELECT *, utilisateur.id as `id` FROM utilisateur
+                      INNER JOIN role ON utilisateur.roleId = role.id
+                      WHERE utilisateur.id = :id');
     // Bind value
     $this->db->bind(':id', $_SESSION['user']['user_id']);
 
     $row = $this->db->single();
-
     return $row ? $row : [];
   }
 }

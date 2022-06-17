@@ -8,6 +8,10 @@ class Groups extends Controller
     }
     $this->groupModel = $this->model('Group');
     $this->candidatModel = $this->model('Candidat');
+    $this->userModel = $this->model('User');
+    $this->adminModel = $this->model('Admin');
+    $this->secretariatModel = $this->model('Secretariat');
+    $this->moniteurModel = $this->model('Moniteur');
   }
   public function index()
   {
@@ -18,12 +22,7 @@ class Groups extends Controller
       'title' => 'Groups',
       'menu' => 'groups',
       'sub-menu' => 'groups',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'groups' => $groups,
       'candidatsGrp' => $candidats,
     ];
@@ -87,12 +86,7 @@ class Groups extends Controller
           'menu' => 'groups',
           'sub-menu' => 'addGroup',
           'action' => 'add',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
           'candidats' => $candidats,
@@ -106,12 +100,7 @@ class Groups extends Controller
         'menu' => 'groups',
         'sub-menu' => 'addGroup',
         'action' => 'add',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
         'candidats' => $candidats,
@@ -172,12 +161,7 @@ class Groups extends Controller
           'action' => 'edit',
           'sub-menu' => 'addGroup',
           'id' => $group['id'],
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
         ];
@@ -190,12 +174,7 @@ class Groups extends Controller
         'menu' => 'groups',
         'action' => 'edit',
         'sub-menu' => 'addGroup',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
       ];

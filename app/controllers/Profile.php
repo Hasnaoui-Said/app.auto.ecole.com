@@ -1,5 +1,5 @@
 <?php
-class Resultats extends Controller
+class Profile extends Controller
 {
   public function __construct()
   {
@@ -17,11 +17,11 @@ class Resultats extends Controller
     // Get data users
 
     $data = [
-      'title' => 'Resultats',
-      'menu'=> 'resultats',
+      'title' => 'Profile',
+      'menu'=> 'profile',
       'user' => $this->userConnected(),
     ];
-    $this->view('resultats/index', $data);
+    $this->view('profile/index', $data);
   }
   
 }

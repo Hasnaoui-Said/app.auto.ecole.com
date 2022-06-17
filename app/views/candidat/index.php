@@ -4,9 +4,11 @@
 <!-- BEGIN #content -->
 <div id="content" class="app-content">
     <!-- BEGIN page-header -->
-    <h1 class="page-header">
+    <h1 class="page-header d-flex justify-content-between">
         <span class="me-3">Candidats</span>
-        <a href="<?= URLROOT ?>/candidats/add" class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">Ajouter</a>
+        <a href="<?= URLROOT ?>/candidats/add" class="btn btn-success btn-sm btn-rounded px-4">
+            <i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Ajouter
+        </a>
     </h1>
     <!-- END page-header -->
 
@@ -16,56 +18,79 @@
 
             <div class="">
                 <div class="row m-2 mt-3">
-                    <form class="col-4 d-flex justify-content-start align-items-center" action="<?= URLROOT ?>/candidats/" method="POST">
+                    <form class="col-4 d-flex justify-content-start align-items-center" action="<?= URLROOT ?>/candidats" method="POST">
                         <span class="text-nowrap mx-2">Nombre de rangées:</span>
                         <select class="form-select form-select-sm w-25" name="row-nbr">
-                            <option value="10">10</option>
-                            <option value="25">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="250">250</option>
-                            <option value="500">500</option>
+                            <option value="1">10</option>
+                            <option value="2">20</option>
+                            <option value="5">50</option>
+                            <option value="10">100</option>
+                            <option value="25">250</option>
+                            <option value="50">500</option>
                         </select>
                         <button class="btn btn-sm mx-2" type="submit" style="color: #00acac; border: #00acac 1.2px solid;">Appliquer</button>
                     </form>
                 </div>
                 <!-- BEGIN panel-body -->
-                <div class="panel-body table-responsive">
-                    <table id="data-table-fixed-columns" class="table table-striped table-bordered align-middle">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="text-nowrap">Username</th>
-                                <th class="text-nowrap">Nom</th>
-                                <th class="text-nowrap">Phone</th>
-                                <th class="text-nowrap">CIN</th>
-                                <th class="text-nowrap">Categorie De Permis</th>
-                                <th class="text-nowrap">Date d'incris</th>
-                                <th class="text-nowrap" colspan="2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 0;
-                            foreach ($data['candidats'] as $row) : $i++; ?>
+                <div class="panel-body">
+                    <div class="table-responsive mb-4">
+                        <table id="data-table-fixed-columns" class="table table-striped table-bordered align-middle">
+                            <thead>
                                 <tr>
-                                    <th><?= $i ?></th>
-                                    <td class="text-nowrap"><?= $row['username'] ?></td>
-                                    <td class="">
-                                        <strong class="text-nowrap">
-                                            <?= $row['nom_fr'] . ' ' . $row['prenom_fr'] ?>
-                                        </strong>
-                                        <p class="text-nowrap"><a class="text-decoration-none" href="mailTo:<?= $row['email'] ?>"><?= $row['email'] ?></a></p>
-                                    </td>
-                                    <td class="text-nowrap"><?= $row['phone'] ?></td>
-                                    <td class="text-nowrap"><?= $row['cin'] ?></td>
-                                    <td class="text-nowrap text-center"><?= $row['Categorie'] ?></td>
-                                    <td class="text-nowrap"><?= $row['dateCreate'] ?></td>
-                                    <td class="text-nowrap"><a href="<?= URLROOT; ?>/candidats/edit/<?= $row['candidatId']; ?>">edit</a></td>
-                                    <td class="text-nowrap"><a href="<?= URLROOT; ?>/candidats/desactivate/<?= $row['userId']; ?>">delete</a></td>
+                                    <th colspan="2">#</th>
+                                    <th class="text-nowrap">Username</th>
+                                    <th class="text-nowrap">Nom</th>
+                                    <th class="text-nowrap">Phone</th>
+                                    <th class="text-nowrap">CIN</th>
+                                    <th class="text-nowrap">Permis</th>
+                                    <th class="text-nowrap">Date d'incris</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="fs-5">
+                                <?php $i = 0;
+                                foreach ($data['candidats'] as $row) : $i++; ?>
+                                    <tr>
+                                        <th><?= $i ?></th>
+                                        <td class="text-nowrap">
+                                            <img width="50" height="50" class="rounded" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" alt="">
+                                        </td>
+                                        <td class="text-nowrap"><?= $row['username'] ?></td>
+                                        <td class="">
+                                            <strong class="text-nowrap">
+                                                <?= $row['nom_fr'] . ' ' . $row['prenom_fr'] ?>
+                                            </strong>
+                                            <p class="text-nowrap"><a class="text-decoration-none" href="mailTo:<?= $row['email'] ?>"><?= $row['email'] ?></a></p>
+                                        </td>
+                                        <td class="text-nowrap"><?= $row['phone'] ?></td>
+                                        <td class="text-nowrap"><?= $row['cin'] ?></td>
+                                        <td class="text-nowrap text-center"><?= $row['Categorie'] ?></td>
+                                        <td class="text-nowrap">
+                                            <p><?= date_format(date_create($row['dateCreate']), "d-m-Y"); ?></p>
+                                            <small class="fs-6 d-flex justify-content-end"><?= date_format(date_create($row['dateCreate']), "H:i"); ?></small>
+                                        </td>
+                                        <td class="text-nowrap" nowrap>
+                                            <div class="btn-group">
+                                                <a href="#" class="btn btn-white btn-sm">Plus</a>
+                                                <a href="#" class="btn btn-white btn-sm dropdown-toggle no-caret" data-bs-toggle="dropdown"><span class="caret"></span> </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="<?= URLROOT ?>/candidats/edit/<?= $row['candidatId'] ?>" class="dropdown-item"><i class="fa fa-edit me-3"></i> Modifier</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <?php if ($row['status'] == 0) : ?>
+                                                        <a href="<?= URLROOT ?>/candidats/activate/<?= $row['userId'] ?>" class="dropdown-item"><i class="fa-solid fa-eye me-3"></i>Active</a>
+                                                        <div class="dropdown-divider"></div>
+                                                    <?php else : ?>
+                                                        <a href="<?= URLROOT ?>/candidats/desactivate/<?= $row['userId'] ?>" class="dropdown-item"><i class="fa-solid fa-eye-slash text-dnager me-3"></i> Desactiver</a>
+                                                    <?php endif ?>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="<?= URLROOT ?>/candidats/delete" class="dropdown-item"><i class="fa fa-trash me-3"></i> Supprimer</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- END panel-body -->
             </div>

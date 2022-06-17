@@ -167,8 +167,8 @@
                             <div class="col-lg-6">
                                 <select class="form-select form-control <?= (!empty($data['body_err']['categorie_err'])) ? 'is-invalid' : ''; ?>" name="categorie">
                                     <?php foreach ($data['permis'] as $cat) : ?>
-                                        <option value="<?= $cat['id'] ?>" <?= (!empty($data['body']['categorie']) && $cat['id'] == $data['body']['categorie']) ? 'selected' : ''; ?>>
-                                            <?= $cat['id'] . ' - ' . $cat['Categorie'] ?>
+                                        <option value="<?= $cat['id'] ?>" <?= (!empty($data['body']['categorie']) && $cat['Categorie'] == $data['body']['categorie']) ? 'selected' : ''; ?>>
+                                            <?= '   ' . $cat['Categorie']?>
                                         </option>
                                     <?php endforeach ?>
                                 </select>

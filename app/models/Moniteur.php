@@ -102,4 +102,14 @@ class Moniteur
       return false;
     }
   }
+  // get moniteur data by id User
+  public function getMoniteurByIdUser($id)
+  {
+    $this->db->query('SELECT * FROM `moniteur` WHERE userId = :id');
+    $this->db->bind(':id', $id);
+
+    $row = $this->db->single();
+
+    return $row ? $row : [];
+  }
 }

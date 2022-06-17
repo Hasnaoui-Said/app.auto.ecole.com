@@ -7,6 +7,11 @@ class Vehicules extends Controller
       redirect();
     }
     $this->voitureModel = $this->model('Vehicule');
+    $this->userModel = $this->model('User');
+    $this->adminModel = $this->model('Admin');
+    $this->candidatModel = $this->model('Candidat');
+    $this->secretariatModel = $this->model('Secretariat');
+    $this->moniteurModel = $this->model('Moniteur');
   }
   public function index()
   {
@@ -17,12 +22,7 @@ class Vehicules extends Controller
       'title' => 'Véhicules',
       'menu' => 'vehicules',
       'sub-menu' => 'vehicules',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'voitures' => $voitures,
     ];
     $this->view('voitures/index', $data);
@@ -36,12 +36,7 @@ class Vehicules extends Controller
       'title' => 'Véhicules',
       'menu' => 'vehicules',
       'sub-menu' => 'vehicules',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'voitures' => $voitures,
       'search' => $_POST['search']
     ];
@@ -106,12 +101,7 @@ class Vehicules extends Controller
           'menu' => 'vehicules',
           'action' => 'add',
           'sub-menu' => 'add',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
         ];
@@ -141,12 +131,7 @@ class Vehicules extends Controller
         'menu' => 'vehicules',
         'action' => 'add',
         'sub-menu' => 'add',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
       ];
@@ -213,12 +198,7 @@ class Vehicules extends Controller
           'menu' => 'vehicules',
           'action' => 'edit',
           'sub-menu' => 'edit',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
         ];
@@ -248,12 +228,7 @@ class Vehicules extends Controller
         'menu' => 'vehicules',
         'action' => 'edit',
         'sub-menu' => 'edit',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
       ];
@@ -280,12 +255,7 @@ class Vehicules extends Controller
       'title' => 'notifications',
       'menu' => 'vehicules',
       'sub-menu' => 'notifications',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ]
+      'user' => $this->userConnected(),
     ];
     $this->view('voitures/notifications', $data);
   }

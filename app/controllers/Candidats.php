@@ -11,26 +11,22 @@ class Candidats extends Controller
     $this->userModel = $this->model('User');
     $this->typeFormationModel = $this->model('TypeFormation');
     $this->payiementModel = $this->model('Payiement');
+    $this->adminModel = $this->model('Admin');
   }
   public function index()
   {
     // Get data candidats
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $limit = $_POST['row-nbr'];
-      $candidats = $this->candidatModel->getCandidats($limit);
+      $candidats = $this->candidatModel->getAllCandidats($limit);
     } else {
-      $candidats = $this->candidatModel->getCandidats();
+      $candidats = $this->candidatModel->getAllCandidats();
     }
     $data = [
       'title' => 'Candidats',
       'menu' => 'candidats',
       'sub-menu' => 'candidats',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'candidats' => $candidats,
       'search' => ''
     ];
@@ -39,7 +35,12 @@ class Candidats extends Controller
   public function search()
   {
     // Get data users
-    $candidats = $this->candidatModel->search($_POST['search']);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $search = $_POST['search'];
+      $candidats = $this->candidatModel->search($search);
+    } else {
+      $candidats = $this->candidatModel->getAllCandidats();
+    }
     $data = [
       'title' => 'Candidats',
       'menu' => 'candidats',
@@ -277,12 +278,7 @@ class Candidats extends Controller
           'menu' => 'candidats',
           'sub-menu' => 'addCandidat',
           'action' => 'add',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
           'permis' => $permis,
@@ -296,12 +292,7 @@ class Candidats extends Controller
         'menu' => 'candidats',
         'sub-menu' => 'addCandidat',
         'action' => 'add',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
         'permis' => $permis,
@@ -347,7 +338,7 @@ class Candidats extends Controller
       'dateContrat' => $candidat['dateContrat'],
       // 'dateExamen1' => $candidat['dateExamen1'],
       // 'dateExamen2' => $candidat['dateExamen2'],
-      'img' => $candidat['img'],
+      'img' => $candidat['image'],
       'prenomAr' => $candidat['prenom_ar'],
       'nomAr' => $candidat['nom_ar'],
       'lieuNaissAr' => $candidat['lieu_naiss_Ar'],
@@ -508,12 +499,7 @@ class Candidats extends Controller
           'menu' => 'candidats',
           'sub-menu' => 'addCandidat',
           'action' => 'edit',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'body' => $body,
           'body_err' => $body_err,
           'permis' => $permis,
@@ -527,17 +513,13 @@ class Candidats extends Controller
         'menu' => 'candidats',
         'sub-menu' => 'addCandidat',
         'action' => 'edit',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'body' => $body,
         'body_err' => $body_err,
         'permis' => $permis,
         'typeFormations' => $typeFormations,
       ];
+      // die;
       $this->view('candidat/add', $data);
     }
   }
@@ -546,6 +528,20 @@ class Candidats extends Controller
   {
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if ($this->userModel->desactivateUser($id)) {
+        flash('candidat_message', 'Candidat désactivé avec succès');
+        redirect('candidats');
+      } else {
+        die('Something went wrong');
+      }
+    } else {
+      die('Something went wrong');
+    }
+  }
+  // activate candidat
+  public function activate($id)
+  {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      if ($this->userModel->activateUser($id)) {
         flash('candidat_message', 'Candidat désactivé avec succès');
         redirect('candidats');
       } else {

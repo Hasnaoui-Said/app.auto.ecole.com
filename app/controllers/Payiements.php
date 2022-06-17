@@ -7,6 +7,10 @@ class Payiements extends Controller
       redirect();
     }
     $this->candidatModel = $this->model('Candidat');
+    $this->userModel = $this->model('User');
+    $this->adminModel = $this->model('Admin');
+    $this->secretariatModel = $this->model('Secretariat');
+    $this->moniteurModel = $this->model('Moniteur');
   }
   public function index()
   {
@@ -16,12 +20,7 @@ class Payiements extends Controller
       'title' => 'Payiements',
       'menu'=> 'payiements',
       'sub-menu'=> 'payiements',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ]
+      'user' => $this->userConnected(),
     ];
     $this->view('payiement/index', $data);
   }
@@ -33,12 +32,7 @@ class Payiements extends Controller
       'title' => 'Ajouter Payiements',
       'menu'=> 'payiements',
       'sub-menu'=> 'add',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ]
+      'user' => $this->userConnected(),
     ];
     $this->view('payiement/add', $data);
   }
@@ -50,12 +44,7 @@ class Payiements extends Controller
       'title' => 'Historiqes des Payiements',
       'menu'=> 'payiements',
       'sub-menu'=> 'history',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ]
+      'user' => $this->userConnected(),
     ];
     $this->view('payiement/history', $data);
   }

@@ -1,4 +1,4 @@
-!-- BEGIN #header -->
+<!-- BEGIN #header -->
 <div id="header" class="app-header">
     <!-- BEGIN navbar-header -->
     <div class="navbar-header">
@@ -20,48 +20,16 @@
                 </div>
             </form>
         </div>
-<!--  
-        <div class="navbar-item dropdown">
-            <a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
-                <i class="fa fa-bell"></i>
-                <span class="badge">5</span>
-            </a>
-            <div class="dropdown-menu media-list dropdown-menu-end">
-                <div class="dropdown-header">NOTIFICATIONS (5)</div>
-                <a href="javascript:;" class="dropdown-item media">
-                    <div class="media-left">
-                        <i class="fa fa-bug media-object bg-gray-500"></i>
-                    </div>
-                    <div class="media-body">
-                        <h6 class="media-heading">Server Error Reports <i class="fa fa-exclamation-circle text-danger"></i></h6>
-                        <div class="text-muted fs-10px">3 minutes ago</div>
-                    </div>
-                </a>
-                <a href="javascript:;" class="dropdown-item media">
-                    <div class="media-left">
-                        <img src="<?php //echo URLROOT; 
-                                    ?>/public/assets/img/user/user-1.jpg" class="media-object" alt="" />
-                        <i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
-                    </div>
-                    <div class="media-body">
-                        <h6 class="media-heading">John Smith</h6>
-                        <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
-                        <div class="text-muted fs-10px">25 minutes ago</div>
-                    </div>
-                </a>
-            </div>
-        </div>
--->
         <div class="navbar-item navbar-user dropdown">
             <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                <img src="<?php echo URLROOT; ?>/public/assets/img/user/user-13.jpg" alt="" />
+                <img class="" width="100" height="100" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($data['user']['image']); ?>" alt="" />
                 <span>
                     <span class="d-none d-md-inline"><?= $data['user']['name']; ?></span>
                     <b class="caret"></b>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end me-1">
-                <a href="javascript:;" class="dropdown-item">Modifier le Profile</a>
+                <a href="profile" class="dropdown-item">Modifier le Profile</a>
                 <!-- <a href="javascript:;" class="dropdown-item d-flex align-items-center">
                     Seance de formations
                     <span class="badge bg-danger rounded-pill ms-auto pb-4px">2</span>
@@ -86,7 +54,7 @@
                 <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
                     <div class="menu-profile-cover with-shadow" style="background: url(<?php echo URLROOT; ?>/public/assets/img/user/ecole.jpg);"></div>
                     <div class="menu-profile-image">
-                        <img src="<?php echo URLROOT; ?>/public/assets/img/user/user-11.jpg" alt="" />
+                        <img class="rounded" width="100" height="100" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($data['user']['image']); ?>" alt="" />
                     </div>
                     <div class="menu-profile-info">
                         <div class="d-flex align-items-center">
@@ -95,7 +63,9 @@
                             </div>
                             <div class="menu-caret ms-auto"></div>
                         </div>
-                        <small><?= $data['user']['role'] ?></small>
+                        <small>Role :
+                            <strong><?= $data['user']['role'] ?></strong>
+                        </small>
                     </div>
                 </a>
             </div>
@@ -107,7 +77,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a href="javascript:;" class="menu-link">
+                    <a href="profile" class="menu-link">
                         <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
                         <div class="menu-text">Modifier le profile</div>
                     </a>

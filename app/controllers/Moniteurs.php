@@ -9,6 +9,9 @@ class Moniteurs extends Controller
     $this->moniteurModel = $this->model('Moniteur');
     $this->userModel = $this->model('User');
     $this->typeMoniteurModel = $this->model('TypeMoniteur');
+    $this->adminModel = $this->model('Admin');
+    $this->candidatModel = $this->model('Candidat');
+    $this->secretariatModel = $this->model('Secretariat');
   }
   public function index()
   {
@@ -19,12 +22,7 @@ class Moniteurs extends Controller
       'title' => 'Moniteurs',
       'menu' => 'moniteurs',
       'sub-menu' => 'moniteurs',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'moniteurs' => $moniteurs,
     ];
     $this->view('moniteurs/index', $data);
@@ -38,12 +36,7 @@ class Moniteurs extends Controller
       'title' => 'Moniteurs',
       'menu' => 'moniteurs',
       'sub-menu' => 'moniteurs',
-      'user' => [
-        'id' => 'id',
-        'name' => 'name',
-        'email' => 'email',
-        'role' => 'role',
-      ],
+      'user' => $this->userConnected(),
       'moniteurs' => $moniteurs,
       'search' => $_POST['search']
     ];
@@ -149,12 +142,7 @@ class Moniteurs extends Controller
           'menu' => 'moniteurs',
           'action' => 'add',
           'sub-menu' => 'add',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'moniteurs' => $moniteurs,
           'typeMoniteurs' => $typeMoniteurs,
           'body' => $body,
@@ -169,12 +157,7 @@ class Moniteurs extends Controller
         'menu' => 'moniteurs',
         'action' => 'add',
         'sub-menu' => 'addMoniteur',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'moniteurs' => $moniteurs,
         'typeMoniteurs' => $typeMoniteurs,
         'body' => $body,
@@ -286,12 +269,7 @@ class Moniteurs extends Controller
           'menu' => 'moniteurs',
           'action' => 'edit',
           'sub-menu' => 'addMoniteur',
-          'user' => [
-            'id' => 'id',
-            'name' => 'name',
-            'email' => 'email',
-            'role' => 'role',
-          ],
+          'user' => $this->userConnected(),
           'typeMoniteurs' => $typeMoniteurs,
           'body' => $body,
           'body_err' => $body_err,
@@ -315,12 +293,7 @@ class Moniteurs extends Controller
         'menu' => 'moniteurs',
         'action' => 'edit',
         'sub-menu' => 'addMoniteur',
-        'user' => [
-          'id' => 'id',
-          'name' => 'name',
-          'email' => 'email',
-          'role' => 'role',
-        ],
+        'user' => $this->userConnected(),
         'typeMoniteurs' => $typeMoniteurs,
         'body' => $body,
         'body_err' => $body_err,
