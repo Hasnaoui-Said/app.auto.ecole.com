@@ -30,16 +30,15 @@ class User
   // Login User
   public function login($email, $password)
   {
-    $this->db->query('SELECT * FROM utilisateur  WHERE email = :email');
+    $this->db->query('SELECT * FROM utilisateur INNER JOIN role ON utilisateur.roleId = role.id WHERE email = :email');
     $this->db->bind(':email', $email);
-
     $row = $this->db->single();
 
     $hashed_password = $row['password'];
     if (password_verify($password, $hashed_password)) {
       return $row;
     } else {
-      return false;
+      return [];
     }
   }
   // find user by username
@@ -168,5 +167,16 @@ class User
     } else {
       return false;
     }
+  }
+  // get user connected
+  public function getUserConnected()
+  {
+    $this->db->query('SELECT * FROM utilisateur WHERE id = :id');
+    // Bind value
+    $this->db->bind(':id', $_SESSION['user']['user_id']);
+
+    $row = $this->db->single();
+
+    return $row ? $row : [];
   }
 }

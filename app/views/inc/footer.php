@@ -1,14 +1,13 @@
 	</div>
 	<!-- END #app -->
 
-	<!-- ================== BEGIN core-js ================== -->
 	<script src="<?php echo URLROOT; ?>/public/assets/js/vendor.min.js"></script>
 	<script src="<?php echo URLROOT; ?>/public/assets/js/app.min.js"></script>
 	<!-- ================== END core-js ================== -->
 
 	<!-- <script src="<?php echo URLROOT; ?>/public/assets/js/demo/dashboard.js"></script> -->
 	<!-- ================== END page-js ================== -->
-
+	
 	<!-- ================== BEGIN page-js ================== -->
 	<script src="<?php echo URLROOT; ?>/public/assets/plugins/moment/min/moment.min.js"></script>
 	<script src="<?php echo URLROOT; ?>/public/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -46,8 +45,8 @@
 			console.log("clicked");
 			openFullscreen();
 		});
-
-	</script>
+		
+		</script>
 
 <script>
     document.querySelector('.img_input').addEventListener('change', function(e) {
@@ -62,6 +61,7 @@
     }); // change
 </script>
 
-	</body>
+</body>
 
 	</html>
+<!-- ================== BEGIN core-js ================== -->

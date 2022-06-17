@@ -10,8 +10,12 @@ class Home extends Controller
   }
   public function index()
   {
-    // Get data users
-    // $users = $this->usersModel->getUsers();
+    // Get data user connected
+    $user = $this->userModel->getUserConnected();
+    echo '<pre>';
+    print_r($user);
+    echo '</pre>';
+    die;
 
     $data = [
       'title' => 'home',

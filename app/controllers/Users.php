@@ -13,8 +13,9 @@ class Users extends Controller
   {
     $data = [
       'title' => 'login',
-      'email' => '',
-      'password' => '',
+      'email' => $_COOKIE['user_email'] ?? '',
+      'password' => $_COOKIE['user_password'] ?? '',
+      'cookie' => $_COOKIE['remember_me'] ?? '',
       'email_err' => '',
       'password_err' => ''
     ];
@@ -33,6 +34,7 @@ class Users extends Controller
         'title' => 'Auto ecole | login',
         'email' => trim($_POST['email']),
         'password' => trim($_POST['password']),
+        'remember_me' => isset($_POST['remember_me']) ? trim($_POST['remember_me']) : '',
         'email_err' => '',
         'password_err' => '',
       ];
@@ -48,10 +50,8 @@ class Users extends Controller
       }
 
       // Check for user/email
-      if ($this->userModel->findUserByEmail($data['email'])) {
+      if (!$this->userModel->findUserByEmail($data['email'])) {
         // User found
-      } else {
-        // User not found
         $data['email_err'] = 'Nom d\'utilisateur incorrect';
       }
 
@@ -60,10 +60,17 @@ class Users extends Controller
         // Validated
         // Check and set logged in user
         $loggedInUser = $this->userModel->login($data['email'], $data['password']);
-
-        if ($loggedInUser) {
+        if (count($loggedInUser) > 0) {
           // Create Session
+          // create cookie
+          if ($data['remember_me'] == 'on') {
+            $this->createUserCookie($data['email'], $data['password']);
+          } else {
+            // destroy cookie
+            $this->destroyUserCookie();
+          }
           $this->createUserSession($loggedInUser);
+          redirect('home');
         } else {
           $data['password_err'] = 'Mot de passe incorrect';
           $this->view('users/login', $data);
@@ -76,10 +83,11 @@ class Users extends Controller
       // Init data
       $data = [
         'title' => 'Auto ecole | Connexion',
-        'email' => '',
-        'password' => '',
+        'email' => $_COOKIE['user_email'] ?? '',
+        'password' => $_COOKIE['user_password'] ?? '',
+        'cookie' => $_COOKIE['remember_me'] ?? '',
         'email_err' => '',
-        'password_err' => ''
+        'password_err' => '',
       ];
       // Load view
       $this->view('users/login', $data);
@@ -89,13 +97,27 @@ class Users extends Controller
   public function createUserSession($user)
   {
     $_SESSION['user'] = array(
-      'user_id' => $user->id,
-      'user_email' => $user->email,
-      'user_name' => $user->name
+      'user_id' => $user['id'],
+      'user_email' => $user['email'],
+      'role' => $user['role'],
     );
-    redirect('home');
   }
-
+  //  create user cookie
+  public function createUserCookie($email, $password)
+  {
+    // create cookie
+    $cookie_expire = time() + (60 * 60 * 24 * 7);
+    setcookie('user_password', $password, $cookie_expire);
+    setcookie('user_email', $email, $cookie_expire);
+    setcookie('remember_me', 'on', $cookie_expire);
+  }
+  // destroy user cookie
+  public function destroyUserCookie()
+  {
+    setcookie('user_password', '', time() - 3600);
+    setcookie('user_email', '', time() - 3600);
+    setcookie('remember_me', '', time() - 3600);
+  }
   public function logout()
   {
     unset($_SESSION['user']);
