@@ -35,9 +35,9 @@
 
 <body>
 	<!-- BEGIN #loader -->
-	<div id="loader" class="app-loader">
+	<!-- <div id="loader" class="app-loader">
 		<span class="spinner"></span>
-	</div>
+	</div> -->
 	<!-- END #loader -->
 
 	<!-- BEGIN #app -->

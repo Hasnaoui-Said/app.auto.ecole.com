@@ -9,6 +9,12 @@
 
     <!-- BEGIN row -->
     <div class="row">
+        <?php
+          echo '<pre>';
+          print_r($_SESSION);
+          print_r($_COOKIE);
+          echo '</pre>';
+        ?>
         <!-- BEGIN col-3 -->
         <!-- <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-blue">

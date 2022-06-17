@@ -1,4 +1,4 @@
-<!-- BEGIN #header -->
+!-- BEGIN #header -->
 <div id="header" class="app-header">
     <!-- BEGIN navbar-header -->
     <div class="navbar-header">
@@ -13,14 +13,15 @@
     <!-- BEGIN header-nav -->
     <div class="navbar-nav">
         <div class="navbar-item navbar-form">
-            <form action="<?= URLROOT . '/'. $data['menu']?>/search" method="POST" name="search">
+            <form action="<?= URLROOT . '/' . $data['menu'] ?>/search" method="POST" name="search">
                 <div class="form-group">
                     <input type="text" name="search" class="form-control" value="<?= $data['search'] ?? '' ?>" placeholder="Chercher" />
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
-        <!-- <div class="navbar-item dropdown">
+<!--  
+        <div class="navbar-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
                 <i class="fa fa-bell"></i>
                 <span class="badge">5</span>
@@ -38,7 +39,8 @@
                 </a>
                 <a href="javascript:;" class="dropdown-item media">
                     <div class="media-left">
-                        <img src="<?php echo URLROOT; ?>/public/assets/img/user/user-1.jpg" class="media-object" alt="" />
+                        <img src="<?php //echo URLROOT; 
+                                    ?>/public/assets/img/user/user-1.jpg" class="media-object" alt="" />
                         <i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
                     </div>
                     <div class="media-body">
@@ -48,8 +50,8 @@
                     </div>
                 </a>
             </div>
-        </div> -->
-
+        </div>
+-->
         <div class="navbar-item navbar-user dropdown">
             <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                 <img src="<?php echo URLROOT; ?>/public/assets/img/user/user-13.jpg" alt="" />
@@ -59,14 +61,14 @@
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end me-1">
-                <a href="javascript:;" class="dropdown-item">Edit Profile</a>
-                <a href="javascript:;" class="dropdown-item d-flex align-items-center">
-                    Inbox
+                <a href="javascript:;" class="dropdown-item">Modifier le Profile</a>
+                <!-- <a href="javascript:;" class="dropdown-item d-flex align-items-center">
+                    Seance de formations
                     <span class="badge bg-danger rounded-pill ms-auto pb-4px">2</span>
-                </a>
-                <a href="javascript:;" class="dropdown-item">Setting</a>
+                </a> -->
+                <a href="javascript:;" class="dropdown-item">Paramétres</a>
                 <div class="dropdown-divider"></div>
-                <a href="<?= URLROOT?>/users/logout" class="dropdown-item">Log Out</a>
+                <a href="<?= URLROOT ?>/users/logout" class="dropdown-item">Se Déconnecter</a>
             </div>
         </div>
     </div>
@@ -101,32 +103,32 @@
                 <div class="menu-item pt-5px">
                     <a href="javascript:;" class="menu-link">
                         <div class="menu-icon"><i class="fa fa-cog"></i></div>
-                        <div class="menu-text">Settings</div>
+                        <div class="menu-text">Paramétres</div>
                     </a>
                 </div>
                 <div class="menu-item">
                     <a href="javascript:;" class="menu-link">
                         <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
-                        <div class="menu-text"> Send Feedback</div>
+                        <div class="menu-text">Modifier le profile</div>
                     </a>
                 </div>
                 <!-- <div class="menu-item pb-5px">
-							<a href="javascript:;" class="menu-link">
-								<div class="menu-icon"><i class="fa fa-question-circle"></i></div>
-								<div class="menu-text"> Logout</div>
-							</a>
-						</div> -->
+                        <a href="javascript:;" class="menu-link">
+                            <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
+                            <div class="menu-text"> Logout</div>
+                        </a>
+                    </div> -->
                 <div class="menu-item pb-5px">
-                    <a href="<?= URLROOT?>/users/logout" class="menu-link">
+                    <a href="<?= URLROOT ?>/users/logout" class="menu-link">
                         <div class="menu-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                        <div class="menu-text"> Logout</div>
+                        <div class="menu-text"> Se déconnecter</div>
                     </a>
                 </div>
                 <div class="menu-divider m-0"></div>
             </div>
             <div class="menu-header" id="fullScreen">Navigation</div>
             <div class="menu-item <?= $data['menu'] == 'home' ? 'active' : '' ?>">
-                <a href="<?= URLROOT?>/home" class="menu-link">
+                <a href="<?= URLROOT ?>/home" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa-solid fa-house-laptop"></i>
                     </div>
@@ -143,12 +145,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item  <?= $data['sub-menu'] == 'candidats' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/candidats" class="menu-link">
+                        <a href="<?= URLROOT ?>/candidats" class="menu-link">
                             <div class="menu-text">Tous les Candidats</div>
                         </a>
                     </div>
                     <div class="menu-item  <?= $data['sub-menu'] == 'addCandidat' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/candidats/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/candidats/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
@@ -164,12 +166,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item  <?= $data['sub-menu'] == 'groups' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/groups" class="menu-link">
+                        <a href="<?= URLROOT ?>/groups" class="menu-link">
                             <div class="menu-text">Tous les Groups</div>
                         </a>
                     </div>
                     <div class="menu-item  <?= $data['sub-menu'] == 'addGroup' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/groups/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/groups/add" class="menu-link">
                             <div class="menu-text">Créer</div>
                         </a>
                     </div>
@@ -185,12 +187,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item  <?= $data['sub-menu'] == 'moniteurs' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/moniteurs" class="menu-link">
+                        <a href="<?= URLROOT ?>/moniteurs" class="menu-link">
                             <div class="menu-text">Tous les moniteurs</div>
                         </a>
                     </div>
                     <div class="menu-item  <?= $data['sub-menu'] == 'addMoniteur' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/moniteurs/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/moniteurs/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
@@ -205,24 +207,25 @@
                     <div class="menu-caret"></div>
                 </a>
                 <div class="menu-submenu">
-                <div class="menu-item  <?= $data['sub-menu'] == 'vehicules' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/vehicules" class="menu-link">
+                    <div class="menu-item  <?= $data['sub-menu'] == 'vehicules' ? 'active' : '' ?>">
+                        <a href="<?= URLROOT ?>/vehicules" class="menu-link">
                             <div class="menu-text">Toutes les véhicule</div>
                         </a>
-                    </div><div class="menu-item  <?= $data['sub-menu'] == 'addVehicules' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/vehicules/add" class="menu-link">
+                    </div>
+                    <div class="menu-item  <?= $data['sub-menu'] == 'addVehicules' ? 'active' : '' ?>">
+                        <a href="<?= URLROOT ?>/vehicules/add" class="menu-link">
                             <div class="menu-text">Nouveau</div>
                         </a>
                     </div>
                     <div class="menu-item  <?= $data['sub-menu'] == 'notifications' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/vehicules/notifications" class="menu-link">
+                        <a href="<?= URLROOT ?>/vehicules/notifications" class="menu-link">
                             <div class="menu-text">Notifications</div>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="menu-item  <?= $data['menu'] == 'resultats' ? 'active' : '' ?>">
-                <a href="<?= URLROOT?>/resultats" class="menu-link">
+                <a href="<?= URLROOT ?>/resultats" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-calendar"></i>
                     </div>
@@ -240,17 +243,17 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item <?= $data['sub-menu'] == 'payiements' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/payiements" class="menu-link">
+                        <a href="<?= URLROOT ?>/payiements" class="menu-link">
                             <div class="menu-text">Tous les payiements</div>
                         </a>
                     </div>
                     <div class="menu-item <?= $data['sub-menu'] == 'addPayiement' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/payiements/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/payiements/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
                     <div class="menu-item <?= $data['sub-menu'] == 'history' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/payiements/history" class="menu-link">
+                        <a href="<?= URLROOT ?>/payiements/history" class="menu-link">
                             <div class="menu-text">Historique des payiements</div>
                         </a>
                     </div>
@@ -266,12 +269,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item <?= $data['menu'] == 'seanceFormations' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/seanceFormations" class="menu-link">
+                        <a href="<?= URLROOT ?>/seanceFormations" class="menu-link">
                             <div class="menu-text">Toutes les Seances</div>
                         </a>
                     </div>
                     <div class="menu-item <?= $data['menu'] == 'planifier' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/seanceFormations/planifier" class="menu-link">
+                        <a href="<?= URLROOT ?>/seanceFormations/planifier" class="menu-link">
                             <div class="menu-text">Planifier une Seance</div>
                         </a>
                     </div>
@@ -287,12 +290,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item <?= $data['menu'] == 'series' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/series" class="menu-link">
+                        <a href="<?= URLROOT ?>/series" class="menu-link">
                             <div class="menu-text">Toutes les Series</div>
                         </a>
                     </div>
                     <div class="menu-item <?= $data['menu'] == 'addSerie' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/series/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/series/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
@@ -308,12 +311,12 @@
                 </a>
                 <div class="menu-submenu">
                     <div class="menu-item <?= $data['menu'] == 'questions' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/questions" class="menu-link">
+                        <a href="<?= URLROOT ?>/questions" class="menu-link">
                             <div class="menu-text">Toutes les Questions</div>
                         </a>
                     </div>
                     <div class="menu-item <?= $data['menu'] == 'addQuestion' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT?>/questions/add" class="menu-link">
+                        <a href="<?= URLROOT ?>/questions/add" class="menu-link">
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
@@ -321,7 +324,7 @@
             </div>
 
             <div class="menu-item <?= $data['menu'] == 'ecole' ? 'active' : '' ?>">
-                <a href="<?= URLROOT?>/ecole" class="menu-link">
+                <a href="<?= URLROOT ?>/ecole" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa-solid fa-school"></i>
                     </div>
