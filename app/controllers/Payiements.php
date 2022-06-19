@@ -43,7 +43,7 @@ class Payiements extends Controller
   public function add($idCandidat = null, $post = null)
   {
     // appel index
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' || $post != null) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' || $post == 'F56766') {
       // Sanitize POST array
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
       // get payiement by id candidat

@@ -8,8 +8,8 @@ define('DB_NAME', 'db_auto_457687');
 // App Root
 define('APPROOT', dirname(dirname(__FILE__)));
 // URL Root
-define('URLROOT', 'http://localhost/palteformeGestionAutoEcole');
+define('URLROOT', 'http://localhost/app.auto.ecole.com');
 // Site Name
-define('SITENAME', 'Auto ecole');
+define('SITENAME', 'Auto Ecole');
 // App Version
 define('APPVERSION', '1.0.0');

@@ -2,7 +2,7 @@
 <?php require APPROOT . '/views/inc/navbar.php'; ?>
 <style>
     .bodycontainer {
-        max-height: 200px;
+        max-height: 320px;
         width: 100%;
         margin: 0;
         overflow-y: auto;
@@ -34,7 +34,7 @@
             <div class="col-sm-12 col-md-6 bg-black-50">
                 <div class="panel-body">
                     <div class="table-responsive bodycontainer scrollable">
-                        <table class="table table-hover table-borderless fs-6 table-scrollable">
+                        <table class="table table-hover  fs-6 table-scrollable">
                             <thead>
                                 <tr class="text-center">
                                     <th class="nowrap">Totale (DHS)</th>
@@ -82,7 +82,7 @@
                 </form>
                 <div class="panel-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <p class="fs-5">Activité récente du: <strong><?= $data['nameCandidat']['nom'] ?></strong> </p>
+                        <p class="fs-5">Activité récente dus: <strong><?= $data['nameCandidat']['nom'] ?></strong> </p>
                     </div>
                     <div class="table-responsive bodycontainer scrollable">
                         <table class="table table-hover table-borderless table-scrollable">
@@ -99,11 +99,8 @@
                                         <td><sup class="text-success pe-1 fs-5">+</sup><?php echo $row['historyTotalPayie']; ?></td>
                                         <td><sub class="text-danger pe-1 fs-5">-</sub><?php echo $row['reste']; ?></td>
                                         <td class="">
-                                            <p class="text-secondary m-0">
-                                                <?= date_format(date_create($row['datePayiement']), "Y-m-d"); ?>
-                                                <br>
-                                                <small class="text-end"><?= date_format(date_create($row['datePayiement']), "H:i"); ?></small>
-                                            </p>
+                                            <?= date_format(date_create($row['datePayiement']), "Y-m-d"); ?>
+                                            <small class="text-end text-secondary"><?= date_format(date_create($row['datePayiement']), "H:i"); ?></small>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
