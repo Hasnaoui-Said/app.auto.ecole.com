@@ -245,7 +245,7 @@
                         <div class="col-8 text-center">
                             <label for="img" class="form-label-sm form-label">Selectionne une image</label>
                             <input class="form-control form-control-sm img_input <?= (!empty($data['body_err']['img_err'])) ? 'is-invalid' : ''; ?>"
-                             multiple accept="image/png, image/jpe, image/jpg, image/jpeg"  id="img" name="img" type="file">
+                            accept="image/png, image/jpe, image/jpg, image/jpeg"  id="img" name="img" type="file">
                             <span class="invalid-feedback"><?= $data['body_err']['img_err']; ?></span>
                         </div>
                     </div>

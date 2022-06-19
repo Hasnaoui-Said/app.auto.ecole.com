@@ -3,13 +3,16 @@
 
 <!-- BEGIN #content -->
 <div id="content" class="app-content">
+    <?php
+    flash('candidat_message');
+    ?>
     <!-- BEGIN page-header -->
-    <h1 class="page-header d-flex justify-content-between">
+    <div class="page-header d-flex justify-content-between">
         <span class="me-3">Candidats</span>
         <a href="<?= URLROOT ?>/candidats/add" class="btn btn-success btn-sm btn-rounded px-4">
             <i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Ajouter
         </a>
-    </h1>
+    </div>
     <!-- END page-header -->
 
     <div class="col-xl-12 panel panel-inverse">
@@ -37,7 +40,7 @@
                         <table id="data-table-fixed-columns" class="table table-striped table-bordered align-middle">
                             <thead>
                                 <tr>
-                                    <th colspan="2">#</th>
+                                    <th class="text-center" colspan="2">#</th>
                                     <th class="text-nowrap">Username</th>
                                     <th class="text-nowrap">Nom</th>
                                     <th class="text-nowrap">Phone</th>
@@ -52,37 +55,53 @@
                                     <tr>
                                         <th><?= $i ?></th>
                                         <td class="text-nowrap">
-                                            <img width="50" height="50" class="rounded" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" alt="">
+                                            <img width="40" height="40" class="rounded" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" alt="">
                                         </td>
                                         <td class="text-nowrap"><?= $row['username'] ?></td>
                                         <td class="">
                                             <strong class="text-nowrap">
                                                 <?= $row['nom_fr'] . ' ' . $row['prenom_fr'] ?>
                                             </strong>
-                                            <p class="text-nowrap"><a class="text-decoration-none" href="mailTo:<?= $row['email'] ?>"><?= $row['email'] ?></a></p>
+                                            <p class="text-nowrap"><a class="text-decoration-none text-info fs-6" href="mailTo:<?= $row['email'] ?>"><?= $row['email'] ?></a></p>
                                         </td>
                                         <td class="text-nowrap"><?= $row['phone'] ?></td>
                                         <td class="text-nowrap"><?= $row['cin'] ?></td>
-                                        <td class="text-nowrap text-center"><?= $row['Categorie'] ?></td>
-                                        <td class="text-nowrap">
-                                            <p><?= date_format(date_create($row['dateCreate']), "d-m-Y"); ?></p>
-                                            <small class="fs-6 d-flex justify-content-end"><?= date_format(date_create($row['dateCreate']), "H:i"); ?></small>
+                                        <td class="text-nowrap text-center">
+                                            <span class="text-white border rounded-2 px-2 py-1
+                                            <?php
+                                            if ($row['Categorie'] == 'A') : echo 'bg-primary';
+                                            elseif ($row['Categorie'] == 'A1') : echo 'bg-primary';
+                                            elseif ($row['Categorie'] == 'B') : echo 'bg-danger';
+                                            elseif ($row['Categorie'] == 'C') : echo 'bg-warning';
+                                            elseif ($row['Categorie'] == 'D') : echo 'bg-success';
+                                            elseif ($row['Categorie'] == 'EB') : echo 'bg-danger';
+                                            elseif ($row['Categorie'] == 'EC') : echo 'bg-warning';
+                                            elseif ($row['Categorie'] == 'EC') : echo 'bg-success';
+                                            endif;
+                                            ?>">
+                                                <?= $row['Categorie'] ?></span>
+                                        </td>
+                                        <td class="text-nowrap py-0">
+                                            <small class="fs-6 m-0 d-flex justify-content-end"><?= date_format(date_create($row['dateCreate']), "H:i"); ?></small>
+                                            <p class="text-secondary m-0"><?= date_format(date_create($row['dateCreate']), "d-m-Y"); ?></p>
                                         </td>
                                         <td class="text-nowrap" nowrap>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-white btn-sm">Plus</a>
                                                 <a href="#" class="btn btn-white btn-sm dropdown-toggle no-caret" data-bs-toggle="dropdown"><span class="caret"></span> </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a href="<?= URLROOT ?>/candidats/edit/<?= $row['candidatId'] ?>" class="dropdown-item"><i class="fa fa-edit me-3"></i> Modifier</a>
+                                                    <a href="<?= URLROOT ?>/candidats/edit/<?= $row['candidatId'] ?>" class="dropdown-item text-warning"><i class="fa fa-edit me-2"></i> Modifier</a>
                                                     <div class="dropdown-divider"></div>
                                                     <?php if ($row['status'] == 0) : ?>
-                                                        <a href="<?= URLROOT ?>/candidats/activate/<?= $row['userId'] ?>" class="dropdown-item"><i class="fa-solid fa-eye me-3"></i>Active</a>
+                                                        <a href="<?= URLROOT ?>/candidats/activate/<?= $row['userId'] ?>" class="dropdown-item text-success"><i class="fa-solid fa-eye me-2"></i>Active</a>
                                                         <div class="dropdown-divider"></div>
                                                     <?php else : ?>
-                                                        <a href="<?= URLROOT ?>/candidats/desactivate/<?= $row['userId'] ?>" class="dropdown-item"><i class="fa-solid fa-eye-slash text-dnager me-3"></i> Desactiver</a>
+                                                        <a href="<?= URLROOT ?>/candidats/desactivate/<?= $row['userId'] ?>" class="dropdown-item text-primary"><i class="fa-solid fa-eye-slash text-dnager me-2"></i> Desactiver</a>
                                                     <?php endif ?>
                                                     <div class="dropdown-divider"></div>
-                                                    <a href="<?= URLROOT ?>/candidats/delete" class="dropdown-item"><i class="fa fa-trash me-3"></i> Supprimer</a>
+                                                    <a href="<?= URLROOT ?>/candidats/delete" class="dropdown-item text-danger"><i class="fa fa-trash me-2"></i> Supprimer</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="<?= URLROOT ?>/candidats/paye/<?= $row['userId'] ?>" class="dropdown-item text-success"><i class="fa-solid fa-comment-dollar me-2"></i> Ajouter Payiement</a>
                                                 </div>
                                             </div>
                                         </td>

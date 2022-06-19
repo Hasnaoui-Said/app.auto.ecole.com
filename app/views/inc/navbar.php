@@ -222,11 +222,6 @@
                             <div class="menu-text">Ajouter</div>
                         </a>
                     </div>
-                    <div class="menu-item <?= $data['sub-menu'] == 'history' ? 'active' : '' ?>">
-                        <a href="<?= URLROOT ?>/payiements/history" class="menu-link">
-                            <div class="menu-text">Historique des payiements</div>
-                        </a>
-                    </div>
                 </div>
             </div>
             <div class="menu-item has-sub <?= $data['menu'] == 'seanceFormations' ? 'active' : '' ?>">

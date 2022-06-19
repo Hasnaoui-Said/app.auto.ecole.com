@@ -155,6 +155,34 @@ class User
     } else {
       return false;
     }
+  }  // update user
+  public function updateImageUser($data, $id)
+  {
+    $img = $data['img'];
+    $query = "UPDATE utilisateur SET image = '$img' WHERE id = :id ";
+    $this->db->query($query);
+    // Bind values
+    $this->db->bind(':id', $id);
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function deleteImageUser($id)
+  {
+    $query = "UPDATE utilisateur SET image = :imgae WHERE id = :id ";
+    $this->db->query($query);
+    // Bind values
+    $this->db->bind(':id', $id);
+    $this->db->bind(':imgae', "");
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
   }
   // desactivate user
   public function desactivateUser($id)

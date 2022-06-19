@@ -11,12 +11,12 @@
     <!-- END panel-heading -->
     <!-- BEGIN panel-body -->
     <div class="panel-body panel p-4">
-        <form class="form-horizontal text-capitalize" action="<?= URLROOT  ?>/moniteurs/<?= $data['action'] == 'add' ? 'add/' : 'edit/' . $data['body']['moniteurId'] ?>" method="POST">
+        <form enctype="multipart/form-data" class="form-horizontal text-capitalize" action="<?= URLROOT  ?>/moniteurs/<?= $data['action'] == 'add' ? 'add/' : 'edit/' . $data['body']['moniteurId'] ?>" method="POST">
             <div class="row">
-                <div class="col-12">
+                <div class="col-9">
                     <div class="row">
                         <div class="col-xs-12 col-md-6 form-group row mb-3">
-                            <label class="col-lg-4 col-form-label form-label" for="username"> Nom d'utilisateur <?= $data['action'] == 'add' ? 'add/' : 'edit/' . $data['body']['moniteurId'] ?>  <sup> *</sup>:</label>
+                            <label class="col-lg-4 col-form-label form-label" for="username"> Nom d'utilisateur <?= $data['action'] == 'add' ? 'add/' : 'edit/' . $data['body']['moniteurId'] ?> <sup> *</sup>:</label>
                             <div class="col-lg-8">
                                 <input class="form-control-sm form-control <?= (!empty($data['body_err']['username_err'])) ? 'is-invalid' : ''; ?>" value="<?= (!empty($data['body']['username'])) ? $data['body']['username'] : ''; ?>" type="text" id="username" name="username" />
                                 <span class="invalid-feedback"><?= $data['body_err']['username_err']; ?></span>
@@ -46,6 +46,16 @@
                             <div class="col-lg-8">
                                 <input class="form-control-sm form-control <?= (!empty($data['body_err']['prenom_err'])) ? 'is-invalid' : ''; ?>" value="<?= (!empty($data['body']['prenom'])) ? $data['body']['prenom'] : ''; ?>" type="text" id="prenom" name="prenom" />
                                 <span class="invalid-feedback"><?= $data['body_err']['prenom_err']; ?></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-12 col-md-6 form-group row mb-3">
+                            <label class="col-lg-4 col-form-label form-label" for="phone"> Télephone <sup>*</sup>:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control-sm form-control <?= (!empty($data['body_err']['phone_err'])) ? 'is-invalid' : ''; ?>" 
+                                value="<?= (!empty($data['body']['phone'])) ? $data['body']['phone'] : ''; ?>" type="text" id="phone" 
+                                name="phone" placeholder="Télephone" />
+                                <span class="invalid-feedback"><?= $data['body_err']['phone_err']; ?></span>
                             </div>
                         </div>
                         <div class="row">
@@ -92,14 +102,26 @@
                                 <span class="invalid-feedback"><?= $data['body_err']['typeMoniteur_err']; ?></span>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6 form-group mb-3 m-auto">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="col-xs-12 form-group row mb-3">
+                        <div class="col-6 m-auto">
+                            <img class="form-label-sm form-label w-100 img_preview" src="data:image/*;charset=utf8;base64,<?php echo base64_encode($data['body']['img']); ?>" alt="" width="100" height="100">
+                        </div>
+                        <div class="text-center">
+                            <label for="img" class="form-label-sm form-label">Selectionne une image</label>
+                            <input class="form-control form-control-sm img_input <?= (!empty($data['body_err']['img_err'])) ? 'is-invalid' : ''; ?>" accept="image/png, image/jpe, image/jpg, image/jpeg" id="img" name="img" type="file">
+                            <span class="invalid-feedback"><?= $data['body_err']['img_err']; ?></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 form-group mt-5 m-auto">
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">
                                     <?= $data['action'] == 'add' ? 'Ajouter' : 'modifier' ?>
                                 </button>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </form>

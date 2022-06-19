@@ -71,6 +71,7 @@ class Users extends Controller
           $this->createUserCookie($data['email'], $data['password'], $data['remember_me']);
           // Create Session
           $this->createUserSession($loggedInUser);
+          flash('login_success', 'Vous êtes connecté avec succès');
           redirect('home');
         } else {
           $data['password_err'] = 'Mot de passe incorrect';

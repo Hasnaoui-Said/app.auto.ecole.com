@@ -4,17 +4,14 @@
 <!-- BEGIN #content -->
 <div id="content" class="app-content">
     <!-- BEGIN page-header -->
+    <?php
+    flash('login_success');
+    ?>
     <h1 class="page-header">Dashboard</h1>
     <!-- END page-header -->
 
     <!-- BEGIN row -->
     <div class="row">
-        <?php
-          echo '<pre>';
-          print_r($_SESSION);
-          print_r($_COOKIE);
-          echo '</pre>';
-        ?>
         <!-- BEGIN col-3 -->
         <!-- <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-blue">

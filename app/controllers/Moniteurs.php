@@ -16,7 +16,13 @@ class Moniteurs extends Controller
   public function index()
   {
     // Get data moniteur
-    $moniteurs = $this->moniteurModel->getMoniteurs();
+    // if post request
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $limit = $_POST['row-nbr'];
+      $moniteurs = $this->moniteurModel->getAllMoniteurs($limit);
+    } else {
+      $moniteurs = $this->moniteurModel->getAllMoniteurs();
+    }
 
     $data = [
       'title' => 'Moniteurs',
@@ -24,21 +30,27 @@ class Moniteurs extends Controller
       'sub-menu' => 'moniteurs',
       'user' => $this->userConnected(),
       'moniteurs' => $moniteurs,
+      'limit' => $limit ?? 1,
     ];
     $this->view('moniteurs/index', $data);
   }
   public function search()
   {
     // Get data moniteur
-    $moniteurs = $this->moniteurModel->search($_POST['search']);
-
+    if (isset($_POST['search'])) {
+      $search = $_POST['search'];
+      $moniteurs = $this->moniteurModel->search($search);
+    } else {
+      $moniteurs = $this->moniteurModel->getAllMoniteurs();
+    }
     $data = [
       'title' => 'Moniteurs',
       'menu' => 'moniteurs',
       'sub-menu' => 'moniteurs',
       'user' => $this->userConnected(),
       'moniteurs' => $moniteurs,
-      'search' => $_POST['search']
+      'limit' => $limit ?? 10,
+      'search' => $_POST['search'] ?? '',
     ];
     $this->view('moniteurs/index', $data);
   }
@@ -66,6 +78,7 @@ class Moniteurs extends Controller
         'num_cpa' => trim($_POST['num_cpa']),
         'date_cpa' => trim($_POST['date_cpa']),
         'typeMoniteur' => trim($_POST['typeMoniteur']),
+        'phone' => trim($_POST['phone']),
       ];
       // die(var_dump($_POST));
       // Validate data
@@ -78,6 +91,10 @@ class Moniteurs extends Controller
         'date_cpa_err' => '',
         'typeMoniteur_err' => '',
       ];
+
+      // validate regex
+      $regix_phone = "/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/";
+      if (!preg_match($regix_phone, $body['phone'])) $body_err['phone_err'] = 'Numéro du télephone invalide';
       // Validate nom
       if (empty($body['nom'])) {
         $body_err['nom_err'] = 'Ce champ est obligatoire';
@@ -114,8 +131,27 @@ class Moniteurs extends Controller
       if (empty($body['typeMoniteur'])) {
         $body_err['typeMoniteur_err'] = 'Ce champ est obligatoire';
       }
+      // validate image
+
+      if (!empty($_FILES["img"]["name"])) {
+        // Get file info 
+        $fileName = basename($_FILES["img"]["name"]);
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        // Allow certain file formats 
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+        if (in_array($fileType, $allowTypes)) {
+          $image = $_FILES['img']['tmp_name'];
+          $body['img'] = addslashes(file_get_contents($image));
+        } else {
+          $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
+        }
+      }
       // Make sure no errors
-      if (empty($body_err['nom_err']) && empty($body_err['prenom_err']) && empty($body_err['username_err']) && empty($body_err['email_err']) && empty($body_err['num_cpa_err']) && empty($body_err['date_cpa_err']) && empty($body_err['typeMoniteur_err'])) {
+      if (
+        empty($body_err['nom_err']) && empty($body_err['prenom_err']) && empty($body_err['username_err']) &&
+        empty($body_err['email_err']) && empty($body_err['num_cpa_err']) && empty($body_err['date_cpa_err']) &&
+        empty($body_err['typeMoniteur_err']) && empty($body_err['phone_err'])
+      ) {
         // hash password
         $body['password'] = password_hash($body['password'], PASSWORD_DEFAULT);
         // Validate data
@@ -129,7 +165,7 @@ class Moniteurs extends Controller
           if ($this->moniteurModel->addMoniteur($body)) {
             flash('moniteur_message', 'Moniteur ajouté avec succès');
             redirect('moniteurs');
-          }else{
+          } else {
             die('Something went wrong');
           }
         } else {
@@ -174,14 +210,15 @@ class Moniteurs extends Controller
     // init data
     $moniteur = $this->moniteurModel->getMoniteurById($id);
     $user = $this->userModel->getUserById($moniteur['userId']);
-    // die(var_dump($typeMoniteurs));
 
     $body = [];
     $body_err = [];
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
       // Sanitize POST data
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
       // Init data
+      extract($_POST);
       $body = [
         'nom' => trim($_POST['nom']),
         'prenom' => trim($_POST['prenom']),
@@ -193,8 +230,10 @@ class Moniteurs extends Controller
         'num_cpa' => trim($_POST['num_cpa']),
         'date_cpa' => trim($_POST['date_cpa']),
         'typeMoniteur' => trim($_POST['typeMoniteur']),
+        'phone' => trim($_POST['phone']),
+        'img' => '',
+        'phone' => '',
       ];
-      // die(var_dump($_POST));
       // Validate data
       $body_err = [
         'nom_err' => '',
@@ -204,7 +243,14 @@ class Moniteurs extends Controller
         'num_cpa_err' => '',
         'date_cpa_err' => '',
         'typeMoniteur_err' => '',
+        'img_err' => '',
+        'phone_err' => '',
       ];
+      // init phone
+      $body['phone'] = trim($_POST['phone']);
+      // validate regex
+      $regix_phone = "/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/";
+      if (!preg_match($regix_phone, $phone)) $body_err['phone_err'] = 'Numéro du télephone invalide';
       // Validate nom
       if (empty($body['nom'])) {
         $body_err['nom_err'] = 'Ce champ est obligatoire';
@@ -229,6 +275,7 @@ class Moniteurs extends Controller
           $body_err['email_err'] = 'Cet adresse email est déjà utilisé';
         }
       }
+
       // Validate num_cpa
       if (empty($body['num_cpa'])) {
         $body_err['num_cpa_err'] = 'Ce champ est obligatoire';
@@ -241,8 +288,28 @@ class Moniteurs extends Controller
       if (empty($body['typeMoniteur'])) {
         $body_err['typeMoniteur_err'] = 'Ce champ est obligatoire';
       }
+      // validate image
+
+      if (!empty($_FILES["img"]["name"])) {
+        // Get file info 
+        $fileName = basename($_FILES["img"]["name"]);
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        // Allow certain file formats 
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+        if (in_array($fileType, $allowTypes)) {
+          $image = $_FILES['img']['tmp_name'];
+          $body['img'] = addslashes(file_get_contents($image));
+        } else {
+          $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
+        }
+      }
       // Make sure no errors
-      if (empty($body_err['nom_err']) && empty($body_err['prenom_err']) && empty($body_err['username_err']) && empty($body_err['email_err']) && empty($body_err['num_cpa_err']) && empty($body_err['date_cpa_err']) && empty($body_err['typeMoniteur_err'])) {
+      if (
+        empty($body_err['nom_err']) && empty($body_err['prenom_err']) && empty($body_err['username_err']) &&
+        empty($body_err['email_err']) && empty($body_err['num_cpa_err']) && empty($body_err['date_cpa_err']) &&
+        empty($body_err['typeMoniteur_err']) && empty($body_err['img_err']) &&
+        empty($body_err['phone_err'])
+      ) {
         // hash password
         $body['password'] = password_hash($body['password'], PASSWORD_DEFAULT);
         // Validate data
@@ -254,9 +321,9 @@ class Moniteurs extends Controller
           $body['userId'] = $user['id'];
           // add moniteur
           if ($this->moniteurModel->UpdateMoniteur($body)) {
-            flash('moniteur_message', 'Moniteur ajouté avec succès');
+            flash('moniteur_message', 'Moniteur a été modifier avec succès', 'alert-warning');
             redirect('moniteurs');
-          }else{
+          } else {
             die('Something went wrong');
           }
         } else {
@@ -287,6 +354,8 @@ class Moniteurs extends Controller
         'num_cpa' => $moniteur['num_cpa'],
         'date_cpa' => $moniteur['date_cpa'],
         'typeMoniteur' => $moniteur['typeMoniteurId'],
+        'phone' => $moniteur['phone'],
+        'img' => $user['image'],
       ];
       $data = [
         'title' => 'Modifier un moniteur :',
@@ -298,7 +367,7 @@ class Moniteurs extends Controller
         'body' => $body,
         'body_err' => $body_err,
       ];
-
+      // die;
       $this->view('moniteurs/add', $data);
     }
   }
@@ -308,8 +377,44 @@ class Moniteurs extends Controller
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       // get moniteur by id
       $moniteur = $this->moniteurModel->getMoniteurById($id);
+      if ($this->moniteurModel->deleteMoniteur($moniteur['userId'])) {
+        if ($this->userModel->deleteUser($moniteur['userId'])) {
+          flash('moniteur_message', 'Moniteur supprimé avec succès', 'alert-danger');
+          redirect('moniteurs');
+        } else {
+          die('Something went wrong');
+        }
+      } else {
+        die('Something went wrong');
+      }
+    } else {
+      redirect('moniteurs');
+    }
+  }
+  // desactivate moniteur
+  public function desactivate($id)
+  {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      // get moniteur by id
+      $moniteur = $this->moniteurModel->getMoniteurById($id);
       if ($this->userModel->desactivateUser($moniteur['userId'])) {
-        flash('moniteur_message', 'Moniteur supprimé avec succès');
+        flash('moniteur_message', 'Moniteur à été desactivé avec succès', 'alert-warning');
+        redirect('moniteurs');
+      } else {
+        die('Something went wrong');
+      }
+    } else {
+      redirect('moniteurs');
+    }
+  }
+  // activate moniteur
+  public function activate($id)
+  {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      // get moniteur by id
+      $moniteur = $this->moniteurModel->getMoniteurById($id);
+      if ($this->userModel->activateUser($moniteur['userId'])) {
+        flash('moniteur_message', 'Moniteur à été activé avec succès', 'alert-info');
         redirect('moniteurs');
       } else {
         die('Something went wrong');

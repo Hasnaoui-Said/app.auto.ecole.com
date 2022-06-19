@@ -16,7 +16,7 @@ class Admin
     $this->db->bind(':id', $id);
     
     $row = $this->db->single();
-
+    
     return $row ? $row : [];
   }
   

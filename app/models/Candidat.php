@@ -110,6 +110,16 @@ class Candidat
     $row = $this->db->single();
     return $row ? $row : [];
   }
+  public function getNameCandidatById($id)
+  {
+    $this->db->query(
+      'SELECT * , candidat.prenom_fr from candidat where id = :id'
+    );
+    $this->db->bind(':id', $id);
+
+    $row = $this->db->single();
+    return $row ? ['nom'=> $row["nom_fr"] . ' '.  $row ["prenom_fr"], 'id'=> $row['id']] : [];
+  }
   // add candidat
   public function addCandidat($data)
   {

@@ -23,7 +23,9 @@ class Controller
       require_once '../app/views/' . $view . '.php';
     } else {
       // View does not exist
-      die('View does not exist');
+      // now exception
+      throw new Exception('View does not exist');
+      die();
     }
   }
   // load user connected
@@ -51,11 +53,17 @@ class Controller
       $userConnected = $this->moniteurModel->getMoniteurByIdUser($user['id']);
     }
     return [
-      'id' => 'id',
+      'id' => $userConnected['id'],
+      'userId' => $userConnected['userId'],
+      'username' => $userConnected['username'],
+      'dateCreate' => $userConnected['dateCreate'],
       'name' => $userConnected['prenom'] . ' ' . $userConnected['nom'],
+      'nom' => $userConnected['nom'],
+      'prenom' => $userConnected['prenom'],
       'email' => $user['email'],
       'role' => $role,
       'image' => $userConnected['image'],
     ];
   }
+
 }

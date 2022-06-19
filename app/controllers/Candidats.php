@@ -12,6 +12,7 @@ class Candidats extends Controller
     $this->typeFormationModel = $this->model('TypeFormation');
     $this->payiementModel = $this->model('Payiement');
     $this->adminModel = $this->model('Admin');
+    $this->secretariatModel  = $this->model('Secretariat');
   }
   public function index()
   {
@@ -205,8 +206,6 @@ class Candidats extends Controller
         } else {
           $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
         }
-      } else {
-        $body_err['img_err'] = 'Please select an image file to upload.';
       }
       // Validate if not empty
       $isEmty = array('username', 'email', 'nom', 'prenom', 'cin', 'phone', 'lieuNais', 'prix', 'reste', 'nbrHeurThe', 'nbrHeurPra');
@@ -242,6 +241,7 @@ class Candidats extends Controller
         && empty($body_err['nbrHeurThe_err']) && empty($body_err['nbrHeurPra_err']) && empty($body_err['categorie_err'])
         && empty($body_err['datenaiss_err']) && empty($body_err['dateDebutTher_err']) && empty($body_err['dateDebutPra_err'])
         && empty($body_err['typeFormation_err']) && empty($body_err['sexe_err'])
+        && empty($body_err['img_err'])
       ) {
 
         // Hash password
@@ -417,12 +417,12 @@ class Candidats extends Controller
       setlocale(LC_TIME, ['MAR', 'mar', 'AR_ar']);
       // validate regex
       $regix_phone = "/^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/";
+      if (!preg_match($regix_phone, $phone)) $body_err['phone_err'] = 'Numéro du télephone invalide';
       if (!preg_match("/^[\w\-]{6,16}$/", $username)) $body_err['username_err'] = 'le nom d\'utilsateur doit avoir au moins 6 caractére';
       if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $email)) $body_err['email_err'] = 'Adresse email invalide';
       if (!preg_match("/^[\w\s]{2,16}$/", $nom)) $body_err['nom_err'] = 'Nom invalide';
       if (!preg_match("/^[\w\s]{2,16}$/", $prenom)) $body_err['prenom_err'] = 'Prénom invalide';
       if (!preg_match("/^\w{3,10}$/", $cin)) $body_err['cin_err'] = 'CIN invalide';
-      if (!preg_match($regix_phone, $phone)) $body_err['phone_err'] = 'Numéro du télephone invalide';
       if (!preg_match("/^[1-9][0-9]$/", $nbrHeurPra)) $body_err['nbrHeurPra_err'] = 'Entrer un number valide';
       if (!preg_match("/^[1-9][0-9]$/", $nbrHeurThe)) $body_err['nbrHeurThe_err'] = 'Entrer un number valide';
       if (!preg_match("/^[01]$/", $sexe)) $body_err['sexe_err'] = 'Ce champ est obligatoire';
@@ -447,8 +447,6 @@ class Candidats extends Controller
         } else {
           $body_err['img_err'] = 'Sorry, only JPG, JPEG, PNG, & jpe files are allowed to upload.';
         }
-      } else {
-        $body_err['img_err'] = 'Please select an image file to upload.';
       }
       // Validate if not empty
       if (empty($username)) $body_err['username_err'] = 'Champs obligatoire!';
@@ -478,12 +476,13 @@ class Candidats extends Controller
         && empty($body_err['lieuNais_err']) && empty($body_err['nbrHeurThe_err']) && empty($body_err['nbrHeurPra_err'])
         && empty($body_err['categorie_err']) && empty($body_err['datenaiss_err'])
         && empty($body_err['typeFormation_err']) && empty($body_err['sexe_err'])
+        && empty($body_err['img_err'])
       ) {
         // add user to database
         if ($this->userModel->updateUser($body)) {
           // update candidat
           if ($this->candidatModel->updateCandidat($body)) {
-            flash('candidat_message', 'Candidat modifier avec succès');
+            flash('candidat_message', 'Candidat à été modifier avec succès');
             redirect('candidats');
           } else {
             die('Something went wrong');
@@ -528,7 +527,7 @@ class Candidats extends Controller
   {
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if ($this->userModel->desactivateUser($id)) {
-        flash('candidat_message', 'Candidat désactivé avec succès');
+        flash('candidat_message', 'Candidat désactivé avec succès', 'alert-danger');
         redirect('candidats');
       } else {
         die('Something went wrong');
@@ -542,13 +541,33 @@ class Candidats extends Controller
   {
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if ($this->userModel->activateUser($id)) {
-        flash('candidat_message', 'Candidat désactivé avec succès');
+        flash('candidat_message', 'Candidat à été activé avec succès', 'alert-info');
         redirect('candidats');
       } else {
         die('Something went wrong');
       }
     } else {
       die('Something went wrong');
+    }
+  }
+  // paye candidat
+  public function paye($id)
+  {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      // get candidat by id user
+      $candidat = $this->candidatModel->getCandidatByIdUser($id);
+      $payement = $this->payiementModel->getPayiementByCandidatId($candidat['id']);
+      if ($payement['totalPayie'] == $payement['total']) {
+        // get payiement by candidat id
+        flash('candidat_message', 'Candidat à déjà payé', 'alert-info');
+        redirect('candidats');
+      } else {
+        // die($payement['totalPayie'] < $payement['total']);
+        redirect('payiements/add/' . $candidat['id'].'/'. 'F56766');
+      }
+    } else {
+      throw new Exception('Something went wrong');
+      die;
     }
   }
 }
