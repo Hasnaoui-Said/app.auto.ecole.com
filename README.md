@@ -1,4 +1,4 @@
-[# palteformeGestionAutoEcole](https://hasnaoui-said.github.io/gestion-auto-ecole/
+[# plateformeGestionAutoEcole](https://hasnaoui-said.github.io/app.auto.ecole.com
 <h1>Cahier de charge d'une plateforme du gestion d'une auto école:</h1>
     <ol type="I">
         <h3>
