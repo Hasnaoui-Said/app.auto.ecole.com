@@ -83,4 +83,11 @@ class Vehicule
       return false;
     }
   }
+  // get count vehicules
+  public function getCountVehicules()
+  {
+    $this->db->query('SELECT COUNT(*) as count FROM vehicule');
+    $row = $this->db->single();
+    return $row['count'];
+  }
 }

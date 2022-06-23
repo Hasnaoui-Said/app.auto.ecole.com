@@ -321,7 +321,7 @@ class Moniteurs extends Controller
           $body['userId'] = $user['id'];
           // add moniteur
           if ($this->moniteurModel->UpdateMoniteur($body)) {
-            flash('moniteur_message', 'Moniteur a été modifier avec succès', 'alert-warning');
+            flash('moniteur_message', 'Moniteur a été modifié avec succès', 'alert-warning');
             redirect('moniteurs');
           } else {
             die('Something went wrong');

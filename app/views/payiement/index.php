@@ -20,7 +20,7 @@
     flash('payiement_message');
     ?>
     <div class="page-header d-flex justify-content-between">
-        <span class="me-3">Payiements</span>
+        <span class="me-3">Payements</span>
         <a href="<?= URLROOT ?>/payiements/add" class="btn btn-success btn-sm btn-rounded px-4">
             <i class="fa fa-plus fa-lg me-2 ms-n2"></i> Ajouter
         </a>
@@ -29,16 +29,31 @@
 
     <!-- BEGIN row -->
     <div class="panel py-4 px-3">
-        <h5>Histrique des payiement:</h5>
+        <h5>Histrique des payements:</h5>
         <div class="row">
             <div class="col-sm-12 col-md-6 bg-black-50">
+                <form action="<?= URLROOT ?>/payiements/add/<?= $data['nameCandidat']['id'] ?>" method="POST" class="row">
+                    <div class="col-6 form-group row mb-3">
+                        <label class="col-5 col-form-label form-label" for="prix">Prix (Dhs)<sup>*</sup>:</label>
+                        <div class="col-7">
+                            <input class="form-control-sm form-control <?= (!empty($data['body_err']['prix_err'])) ? 'is-invalid' : ''; ?>" value="<?= (!empty($data['body']['prix'])) ? $data['body']['prix'] : ''; ?>" type="text" min="0" id="prix" name="prix" placeholder="..DHS" />
+                            <span class="invalid-feedback"><?= $data['body_err']['prix_err']; ?></span>
+                        </div>
+                    </div>
+                    <div class="col-6 form-group text-end">
+                        <button type="submit" class="btn btn-sm btn-info w-50">
+                            <i class="fa-solid fa-credit-card text-white me-3"></i>
+                            Payer
+                        </button>
+                    </div>
+                </form>
                 <div class="panel-body">
                     <div class="table-responsive bodycontainer scrollable">
                         <table class="table table-hover  fs-6 table-scrollable">
                             <thead>
                                 <tr class="text-center">
                                     <th class="nowrap">Totale (DHS)</th>
-                                    <th>Totale payie (DHS)</th>
+                                    <th>Totale payer (DHS)</th>
                                     <th>Reste (DHS)</th>
                                     <th>Nom</th>
                                 </tr>
@@ -64,31 +79,15 @@
             </div>
 
             <div class="col-sm-12 col-md-6">
-                <form action="<?= URLROOT ?>/payiements/add/<?= $data['nameCandidat']['id'] ?>" method="POST" class="row">
-
-                    <div class="col-6 form-group row mb-3">
-                        <label class="col-3 col-form-label form-label" for="prix"> Prix (Dhs)<sup>*</sup>:</label>
-                        <div class="col-9">
-                            <input class="form-control-sm form-control <?= (!empty($data['body_err']['prix_err'])) ? 'is-invalid' : ''; ?>" value="<?= (!empty($data['body']['prix'])) ? $data['body']['prix'] : ''; ?>" type="text" min="0" id="prix" name="prix" placeholder="..DHS" />
-                            <span class="invalid-feedback"><?= $data['body_err']['prix_err']; ?></span>
-                        </div>
-                    </div>
-                    <div class="col-6 form-group text-end">
-                        <button type="submit" class="btn btn-sm btn-info w-50">
-                            <i class="fa-solid fa-credit-card text-white me-3"></i>
-                            Payie
-                        </button>
-                    </div>
-                </form>
                 <div class="panel-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <p class="fs-5">Activité récente dus: <strong><?= $data['nameCandidat']['nom'] ?></strong> </p>
+                        <p class="fs-5">Activité récente du: <strong><?= $data['nameCandidat']['nom'] ?></strong> </p>
                     </div>
                     <div class="table-responsive bodycontainer scrollable">
                         <table class="table table-hover table-borderless table-scrollable">
                             <thead class="">
                                 <tr>
-                                    <th class="nowrap">Totale payie (DHS)</th>
+                                    <th class="nowrap">Totale payer (DHS)</th>
                                     <th>Reste (DHS)</th>
                                     <th>Date</th>
                                 </tr>

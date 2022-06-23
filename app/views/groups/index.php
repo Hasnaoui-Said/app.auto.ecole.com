@@ -16,7 +16,7 @@
                 <div class="panel panel-inverse">
                     <div class="row m-2 mt-3">
                         <div class="col-8 d-flex justify-content-start align-items-start flex-column">
-                            <h4> <small>Nom du group :</small> <?= $row['nomGroup'] ?> </h4>
+                            <h4> <small>Nom du groupe :</small> <?= $row['nomGroup'] ?> </h4>
                             <p><?= date_format(date_create($row['dateCreate']), "d-m-Y"); ?></p>
                         </div>
                         <div class="col-4 d-flex justify-content-end align-items-center gap-1 ">
@@ -29,7 +29,7 @@
                         <div class="panel-body">
                             <!-- BEGIN table-responsive -->
                             <h1 class="page-header d-flex justify-content-between">
-                                <span class="me-3">Listee des candidats: </span>
+                                <span class="me-3">Liste des candidats: </span>
                                 <a href="<?= URLROOT ?>/candidats/add" class="btn btn-sm" style="color: #00acac; border: #00acac 1.2px solid;">Ajouter des Candidats</a>
                             </h1>
                             <div class="table-responsive">
@@ -37,8 +37,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
+                                            <th>Nom d'utilisateur</th>
+                                            <th>E-mail</th>
                                             <th>CIN</th>
                                             <th>Actions</th>
                                         </tr>

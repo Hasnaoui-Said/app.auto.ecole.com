@@ -101,7 +101,7 @@
                                                     <div class="dropdown-divider"></div>
                                                     <a href="<?= URLROOT ?>/candidats/delete" class="dropdown-item text-danger"><i class="fa fa-trash me-2"></i> Supprimer</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a href="<?= URLROOT ?>/candidats/paye/<?= $row['userId'] ?>" class="dropdown-item text-success"><i class="fa-solid fa-comment-dollar me-2"></i> Ajouter Payiement</a>
+                                                    <a href="<?= URLROOT ?>/candidats/paye/<?= $row['userId'] ?>" class="dropdown-item text-success"><i class="fa-solid fa-comment-dollar me-2"></i> Ajouter Payement</a>
                                                 </div>
                                             </div>
                                         </td>

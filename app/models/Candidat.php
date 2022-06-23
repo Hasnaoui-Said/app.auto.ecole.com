@@ -212,4 +212,11 @@ class Candidat
     $row = $this->db->single();
     return $row ? $row : [];
   }
+  // get count candidats
+  public function getCountCandidats()
+  {
+    $this->db->query("SELECT COUNT(*) as `count` FROM `candidat`");
+    $row = $this->db->single();
+    return $row['count'];
+  }
 }

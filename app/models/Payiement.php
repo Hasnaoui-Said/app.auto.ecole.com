@@ -101,4 +101,13 @@ class Payiement
       return false;
     }
   }
+  // get total payiements
+  public function getTotalPayiements()
+  {
+    $this->db->query(
+      'SELECT sum(totalPayie) as `totalPayiements` FROM `payiement`'
+    );
+    $row = $this->db->single();
+    return $row['totalPayiements'];
+  }
 }

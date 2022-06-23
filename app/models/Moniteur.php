@@ -155,4 +155,11 @@ class Moniteur
 
     return $row ? $row : [];
   }
+  // get count moniteurs
+  public function getCountMoniteurs()
+  {
+    $this->db->query('SELECT count(*) as `count` FROM moniteur');
+    $row = $this->db->single();
+    return $row['count'];
+  }
 }

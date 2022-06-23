@@ -13,60 +13,60 @@
     <!-- BEGIN row -->
     <div class="row">
         <!-- BEGIN col-3 -->
-        <!-- <div class="col-xl-3 col-md-6">
-            <div class="widget widget-stats bg-blue">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
+        <div class="col-xl-3 col-md-6">
+            <div class="widget widget-stats bg-success">
+                <div class="stats-icon"><i class="fa-solid fa-square-dollar">$</i></div>
                 <div class="stats-info">
-                    <h4>TOTAL VISITORS</h4>
-                    <p>3,291,922</p>
+                    <h4>TOTALE PAYEMENTS</h4>
+                    <p><?= $data['totalPayements']?> . 000 (DHS)</p>
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail<i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="<?= URLROOT?>/payiements">View Detail<i class="fa fa-arrow-alt-circle-right"></i></a>
                 </div>
             </div>
-        </div> -->
+        </div>
         <!-- END col-3 -->
         <!-- BEGIN col-3 -->
-        <!-- <div class="col-xl-3 col-md-6">
+         <div class="col-xl-3 col-md-6">
+            <div class="widget widget-stats bg-danger">
+                <div class="stats-icon"><i class="fa fa-links">M</i></div>
+                <div class="stats-info">
+                    <h4>TOATALE DES MONITEURS</h4>
+                    <p><?= $data['countMoniteurs']?></p>
+                </div>
+                <div class="stats-link">
+                    <a href="<?= URLROOT?>/moniteurs">View Detail<i class="fa fa-arrow-alt-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- END col-3 -->
+        <!-- BEGIN col-3 -->
+        <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-info">
-                <div class="stats-icon"><i class="fa fa-link"></i></div>
-                <div class="stats-info">
-                    <h4>BOUNCE RATE</h4>
-                    <p>20.44%</p>
-                </div>
-                <div class="stats-link">
-                    <a href="javascript:;">View Detail<i class="fa fa-arrow-alt-circle-right"></i></a>
-                </div>
-            </div>
-        </div> -->
-        <!-- END col-3 -->
-        <!-- BEGIN col-3 -->
-        <!-- <div class="col-xl-3 col-md-6">
-            <div class="widget widget-stats bg-orange">
                 <div class="stats-icon"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>UNIQUE VISITORS</h4>
-                    <p>1,291,922</p>
+                    <h4>TOTALE DES CANDIDATS</h4>
+                    <p><?= $data['countCandidats']?></p>
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="<?= URLROOT?>/candidats">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
                 </div>
             </div>
-        </div> -->
+        </div> 
         <!-- END col-3 -->
         <!-- BEGIN col-3 -->
-        <!-- <div class="col-xl-3 col-md-6">
-            <div class="widget widget-stats bg-red">
-                <div class="stats-icon"><i class="fa fa-clock"></i></div>
+        <div class="col-xl-3 col-md-6">
+            <div class="widget widget-stats bg-warning">
+                <div class="stats-icon"><i class="fa-solid fa-car"></i></div>
                 <div class="stats-info">
-                    <h4>AVG TIME ON SITE</h4>
-                    <p>00:12:23</p>
+                    <h4>TOTALE DES VEHICULES</h4>
+                    <p><?= $data['countVehicules']?></p>
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="<?= URLROOT?>/vehicules">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
                 </div>
             </div>
-        </div> -->
+        </div>
         <!-- END col-3 -->
     </div>
     <!-- END row -->
